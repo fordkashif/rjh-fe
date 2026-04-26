@@ -1,0 +1,34 @@
+.anim-order-1, .anim-order-2, .anim-order-3, .anim-order-4, .anim-order-5{
+    opacity: 0;
+}
+
+.swiper-slide.swiper-slide-active .anim-order-1,
+.swiper-slide.swiper-slide-duplicate-active .anim-order-1{
+    animation-name: fadeInUp;
+    animation-duration: .75s;
+    animation-delay: 1s;
+}
+.swiper-slide.swiper-slide-active .anim-order-2,
+.swiper-slide.swiper-slide-duplicate-active .anim-order-2{
+    animation-name: fadeInUp;
+    animation-duration: .75s;
+    animation-delay: 1.2s;
+}
+.swiper-slide.swiper-slide-active .anim-order-3,
+.swiper-slide.swiper-slide-duplicate-active .anim-order-3{
+    animation-name: fadeInUp;
+    animation-duration: .75s;
+    animation-delay: 1.4s;
+}
+.swiper-slide.swiper-slide-active .anim-order-4,
+.swiper-slide.swiper-slide-duplicate-active .anim-order-4{
+    animation-name: fadeInUp;
+    animation-duration: .75s;
+    animation-delay: 1.6s;
+}
+.swiper-slide.swiper-slide-active .anim-order-5,
+.swiper-slide.swiper-slide-duplicate-active .anim-order-5{
+    animation-name: fadeInUp;
+    animation-duration: .75s;
+    animation-delay: 1.8s;
+}

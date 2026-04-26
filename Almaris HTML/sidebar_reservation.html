@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <title>Almaris — Hotel Website Template</title>
+    <link rel="icon" href="images/icon.webp" type="image/gif" sizes="16x16">
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" >
+    <meta content="Almaris — Hotel Website Template" name="description" >
+    <meta content="" name="keywords" >
+    <meta content="" name="author" >
+    <!-- CSS Files
+    ================================================== -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap">
+    <link href="css/plugins.css" rel="stylesheet" type="text/css" >
+    <link href="css/swiper.css" rel="stylesheet" type="text/css" >
+    <link href="css/style.css" rel="stylesheet" type="text/css" >
+    <link href="css/coloring.css" rel="stylesheet" type="text/css" >
+    <!-- color scheme -->
+    <link id="colors" href="css/colors/scheme-01.css" rel="stylesheet" type="text/css" >
+
+</head>
+
+<body>
+
+    <!-- preloader -->
+    <div id="de-loader"></div>
+    <!-- back to top button -->
+    <div id="back-to-top"></div>
+    <!-- sidebar menu button -->
+    <div id="aside-menu"></div>
+
+    <aside id="aside">
+        <div class="d-logo">
+            <a href="sidebar_index.html">
+                <img src="images/logo-big.webp" class="" alt="">
+            </a>
+        </div>
+
+        <div class='d-nav'>
+            <ul>
+                <li><a href='sidebar_index.html'>Home</a></li>
+                <li class='sub-menu'>
+                    <a href='#'>Rooms<div class='fa fa-chevron-down right'></div></a>
+                    <ul>
+                        <li><a href="sidebar_rooms.html">All Rooms Default</a></li>
+                        <li><a href="sidebar_rooms-style-2.html">All Rooms Style 2</a></li>
+                        <li><a href="sidebar_rooms-style-3.html">All Rooms Style 3</a></li>
+                        <li><a href="sidebar_room-single.html">Single Room</a></li>
+                        <li><a href="sidebar_room-single-style-2.html">Single Room Style 2</a></li>
+                    </ul>    
+                </li>
+                <li><a href='sidebar_reservation.html'>Reservation</a></li>
+                <li class='sub-menu'>
+                    <a href='#'>Pages<div class='fa fa-chevron-down right'></div></a>
+                    <ul>
+                        <li><a href="sidebar_about.html">About Us</a></li>
+                        <li><a href="sidebar_facilities.html">Facilities</a></li>
+                        <li><a href="sidebar_special-offers.html">Offers</a></li>
+                        <li><a href="sidebar_gallery.html">Gallery</a></li>
+                        <li><a href="sidebar_gallery-carousel.html">Gallery Carousel</a></li>
+                    </ul>
+                </li>
+                <li><a href="sidebar_news.html">News</a></li>
+                <li><a href="sidebar_contact.html">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="d-extra">
+            <div class="d-flex align-items-center fw-bold text-white">
+                <i class="icofont-phone bg-color circle fs-24 p-2 me-3"></i>
+                <span>+929 333 9296</span>
+            </div>
+        </div>
+
+    </aside>
+
+    <div id="main">
+
+        <section id="subheader" class="relative jarallax text-light">
+            <img src="images/background/3.webp" class="jarallax-img" alt="">
+            <div class="container relative z-index-1000">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 text-center">
+                        <h1>Reservation</h1>
+                        <p class="mt-3 lead">Ready to elevate your travel experience? Reserve your room now and step into a world of comfort and luxury. Your perfect stay is just a click away.</p>
+                        <ul class="crumb">
+                            <li><a href="sidebar_index.html">Home</a></li>
+                            <li class="active">Reservation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="de-overlay"></div>
+        </section>
+
+        <section id="section_form" class="relative">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div id="success_message" class="text-center">
+                            <h2>Your reservation has been sent successfully.</h2>
+                            <div class="col-lg-8 offset-lg-2">
+                                <p>We will contact you shortly. Refresh this page if you want to make another reservation.</p>
+
+                                <img src="images/misc/2.webp" class="w-100 rounded-up-100" alt="">
+                            </div>
+                        </div>
+
+                        <div id="booking_form_wrap">
+                            <form name="contactForm" id='booking_form' class="form-border" method="post" action="booking.php">
+                                <div class="row">
+
+                                    <div class="col-md-12">
+                                        <h4>Choose Date</h4>                                        
+                                        <input type="text" id="date-picker" class="form-control mb-4" name="date" value="">
+
+                                        <div class="guests-n-rooms mb-4">
+                                            <div class="row g-4">
+                                                <div class="col-md-4">
+                                                    <div class="text-center border-1 pt-2">
+                                                        <h4>Adult</h4>
+                                                        <div class="de-number">
+                                                            <span class="d-minus">-</span>
+                                                            <input type="text" class="no-border no-bg" value="1" name="adult">
+                                                            <span class="d-plus">+</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="text-center border-1 pt-2">
+                                                        <h4>Children</h4>
+                                                        <div class="de-number">
+                                                            <span class="d-minus">-</span>
+                                                            <input type="text" class="no-border no-bg" value="0" name="children">
+                                                            <span class="d-plus">+</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="text-center border-1 pt-2">
+                                                        <h4>Room</h4>
+                                                        <div id="d-room-count" class="de-number">
+                                                            <span class="d-minus">-</span>
+                                                            <input id="room-count" type="text" class="no-border no-bg" value="1" name="room_count">
+                                                            <span class="d-plus">+</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="select-room">
+                                    <h4>Select Room</h4>
+
+                                    <select class="room-type form-control" name="room_type">
+                                      <option value='Standart Room' data-src="images/form/1.jpg">
+                                        Standart Room | $119/night | 2 Guests
+                                      </option>
+                                      <option value='Deluxe Room' data-src="images/form/2.jpg">
+                                        Deluxe Room | $129/night | 2 Guests
+                                      </option>
+                                      <option value='Premier Room' data-src="images/form/3.jpg">
+                                        Premier Room | $139/night | 2 Guests
+                                      </option>
+                                      <option value='Family Suite' data-src="images/form/4.jpg">
+                                        Family Suite | $149/night | 4 Guests
+                                      </option>
+                                      <option value='Luxury Suite' data-src="images/form/5.jpg">
+                                        Luxury Suite | $179/night | 2 Guests
+                                      </option>
+                                      <option value='Presidential Suite' data-src="images/form/6.jpg">
+                                        Presidential Suite | $199/night | 2 Guests
+                                      </option>
+                                    </select>
+                                </div>
+
+                                <div id="step-2" class="row g-4 align-items-end">
+                                    
+
+                                    <div class="col-md-6">
+                                        <h4>Enter your details</h4>
+
+                                        <div id='name_error' class='error'>Please enter your name.</div>
+                                        <div>
+                                            <input type='text' name='name' id='name' class="form-control" placeholder="Your Name" required>
+                                        </div>
+
+                                        <div id='email_error' class='error'>Please enter your valid E-mail ID.</div>
+                                        <div>
+                                            <input type='email' name='email' id='email' class="form-control" placeholder="Your Email" required>
+                                        </div>
+
+                                        <div id='phone_error' class='error'>Please enter your phone number.</div>
+                                        <div>
+                                            <input type='text' name='phone' id='phone' class="form-control" placeholder="Your Phone" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <textarea name='message' id='message' class="form-control" placeholder="Your Message"></textarea>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <p id='submit'>
+                                            <input type='submit' id='send_message' value='Submit Form' class="btn-main">
+                                        </p>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id='error_message' class='error'>Sorry, error occured this time sending your message.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>        
+
+        <footer class="text-light section-dark">
+            <div class="container">
+                <div class="row g-4 align-items-center">
+                    <div class="col-md-12">
+                        <div class="d-lg-flex align-items-center justify-content-between text-center">
+                            <div>
+                                <h3 class="fs-20">Address</h3>
+                                742 Evergreen Terrace<br>
+                                Brooklyn, NY 11201
+                            </div>
+                            <div>
+                                <img src="images/logo-white.webp" class="w-200px" alt=""><br>
+                                <div class="social-icons mb-sm-30 mt-4">
+                                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                                </div>
+
+                            </div>
+                            <div>
+                                <h3 class="fs-20">Contact Us</h3>
+                                T. +929 333 9296<br>
+                                M. contact@almaris.com
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="subfooter">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            Copyright 2026 - Almaris by Designesia
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    
+    <!-- Javascript Files
+    ================================================== -->
+    <script src="js/plugins.js"></script>
+    <script src="js/designesia.js"></script>
+    <script src="js/validation-booking.js"></script>
+
+
+</body>
+
+</html>
