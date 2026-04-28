@@ -1,8 +1,14 @@
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { testimonials } from "../../data/siteContent";
+import { usePublicHotelContent } from "../../context/PublicHotelContentContext";
 
 function TestimonialsSection() {
+  const { testimonials } = usePublicHotelContent();
+
+  if (!testimonials.length) {
+    return null;
+  }
+
   return (
     <section
       className="relative overflow-hidden text-light section-dark react-bg-cover react-parallax"

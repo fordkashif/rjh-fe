@@ -1,9 +1,10 @@
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import StarRating from "../StarRating";
-import { heroSlides } from "../../data/siteContent";
+import { usePublicHotelContent } from "../../context/PublicHotelContentContext";
 
 function HeroSection() {
+  const { heroSlides } = usePublicHotelContent();
   return (
     <section
       id="section-intro"

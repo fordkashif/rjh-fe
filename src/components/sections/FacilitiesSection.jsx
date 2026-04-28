@@ -1,36 +1,60 @@
-import { facilityHighlights } from "../../data/siteContent";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { MapPin } from "lucide-react";
+import { carouselBreakpoints } from "../../data/siteContent";
+import { usePublicHotelContent } from "../../context/PublicHotelContentContext";
 
 function FacilitiesSection() {
+  const { facilityHighlights, hotel } = usePublicHotelContent();
   return (
     <section id="section-facilities" className="relative lines-deco">
       <div className="container relative z-2">
         <div className="row g-4">
-          <div className="col-lg-8 offset-lg-2 text-center">
-            <div className="subtitle id-color mb-3">Rooms & Suites</div>
-            <h2>Our Facilites</h2>
+          <div className="col-lg-8">
+            <div className="subtitle id-color mb-3">Nearby Places</div>
+            <h2>What Is Close To Royale Jazz Hotel</h2>
+            <p className="react-nearby-intro mb-0">
+              {hotel.nearbyIntro ?? "Stay close to Kingston culture, shopping, dining, nightlife, and everyday essentials from 58 Westminster Ave."}
+            </p>
           </div>
 
-          {facilityHighlights.map((item) => (
-            <div className="col-md-6" key={item.title}>
-              <div className="relative">
-                <img src={item.image} className="img-fluid" alt={item.title} />
-                <div className="bg-color text-light p-4 start-10 mx-4 mt-70">
-                  <div className="row g-4 align-items-center">
-                    <div className="col-lg-5 text-center">
-                      <div className="de_count fs-15">
-                        <h3 className="fs-60">{item.value}</h3>
-                        {item.title}
+          <div className="col-lg-12">
+            <Swiper
+              modules={[Autoplay, Navigation, Pagination]}
+              className="nearby-carousel owl-single-dots"
+              navigation
+              pagination={{ clickable: true }}
+              autoplay={{ delay: 3200, disableOnInteraction: false, pauseOnMouseEnter: true }}
+              loop
+              grabCursor
+              spaceBetween={24}
+              breakpoints={carouselBreakpoints}
+            >
+              {facilityHighlights.map((item) => (
+                <SwiperSlide key={item.title}>
+                  <article className="react-nearby-card">
+                    <div
+                      className="react-nearby-card-image react-bg-cover"
+                      style={{ backgroundImage: `url(${item.image})` }}
+                    >
+                      <span className="react-nearby-card-category">{item.category}</span>
+                    </div>
+                    <div className="react-nearby-card-body">
+                      <div className="react-nearby-card-topline">
+                        <span className="react-nearby-card-distance">{item.value}</span>
+                        <span className="react-nearby-card-pin">
+                          <MapPin size={14} strokeWidth={2} />
+                          Westminster Ave
+                        </span>
                       </div>
+                      <h3>{item.title}</h3>
+                      <p>{item.text}</p>
                     </div>
-
-                    <div className="col-lg-7">
-                      <p className="no-bottom">{item.text}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
+                  </article>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
         </div>
       </div>
 

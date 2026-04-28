@@ -1,8 +1,9 @@
 import StarRating from "../StarRating";
 import ParallaxMaskImage from "../ParallaxMaskImage";
-import { features } from "../../data/siteContent";
+import { usePublicHotelContent } from "../../context/PublicHotelContentContext";
 
 function AboutSection() {
+  const { features, hotel } = usePublicHotelContent();
   return (
     <section id="section-about" className="relative lines-deco">
       <div className="container">
@@ -10,22 +11,24 @@ function AboutSection() {
           <div className="col-lg-4 sm-hide">
             <div className="relative react-about-image-block">
               <div className="abs top-0 w-100">
-                <ParallaxMaskImage src="/images/misc/2.webp" alt="Hotel lobby" />
+                <ParallaxMaskImage src="/images/misc/royale-jazz-about-left-square.jpg" alt="Royale Jazz Hotel dining area" />
               </div>
             </div>
           </div>
 
           <div className="col-lg-4 text-center">
             <div>
-              <div className="subtitle id-color mb-3">Welcome To Almaris</div>
-              <h2>Exceptional Hospitality and Unmatched Relaxation at Almaris</h2>
+              <div className="subtitle id-color mb-3">Welcome To Royale Jazz Hotel</div>
+              <h2>{hotel.aboutHeading ?? "Refined Comfort, Modern Style, And A Relaxed Kingston Setting"}</h2>
 
               <div className="text-center">
-                <h4 className="fw-bold mb-1">4.9 out of 5</h4>
-                <div className="de-rating-ext fs-18">
+                <h4 className="fw-bold mb-1">Thoughtful Stays</h4>
+                <div className="de-rating-ext fs-18 mb-2">
                   <StarRating />
                 </div>
-                <span className="d-block fs-14 mb-0">Based on 25000+ reviews</span>
+                <span className="d-block fs-14 mb-0">
+                  {hotel.aboutSubheading ?? "Close to city attractions, dining, and nightlife."}
+                </span>
               </div>
             </div>
           </div>
@@ -33,7 +36,7 @@ function AboutSection() {
           <div className="col-lg-4 sm-hide">
             <div className="relative react-about-image-block">
               <div className="abs top-0 w-100">
-                <ParallaxMaskImage src="/images/misc/3.webp" alt="Hotel dining" />
+                <ParallaxMaskImage src="/images/misc/royale-jazz-about-right-square.jpg" alt="Royale Jazz Hotel lounge area" />
               </div>
             </div>
           </div>

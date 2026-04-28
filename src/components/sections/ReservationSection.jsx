@@ -17,7 +17,7 @@ import DateRangeField, {
   rangeToSearchParams,
 } from "../DateRangeField";
 import ReservationCounter from "../ReservationCounter";
-import { footerContent, rooms } from "../../data/siteContent";
+import { usePublicHotelContent } from "../../context/PublicHotelContentContext";
 import {
   buildBookingSummary,
   buildRoomQuote,
@@ -27,6 +27,11 @@ import {
   getBookingNights,
   roomMatchesBookingSearch,
 } from "../../lib/booking";
+import {
+  buildAvailabilitySearchPayload,
+  buildReservationPayload,
+} from "../../lib/bookingApi";
+import { fetchRoomTypeAvailability, submitReservationRequest } from "../../lib/reservationsService";
 
 const directBookingPerks = [
   "Best direct-booking rate shown on site",
@@ -41,6 +46,7 @@ const bookingPolicies = [
 ];
 
 function ReservationSection() {
+  const { hotel: hotelConfig, footerContent, loadState, rooms } = usePublicHotelContent();
   const [searchState, setSearchState] = useState(() =>
     createInitialBookingSearchState(
       typeof window === "undefined" ? undefined : new URLSearchParams(window.location.search),
@@ -49,13 +55,94 @@ function ReservationSection() {
   const [guestState, setGuestState] = useState(createInitialGuestDetails);
   const [selectedRoomTitle, setSelectedRoomTitle] = useState(null);
   const [bookingStep, setBookingStep] = useState("details");
+  const [reservationConfirmation, setReservationConfirmation] = useState(null);
+  const [submitState, setSubmitState] = useState({ status: "idle", error: "" });
+  const [availabilityState, setAvailabilityState] = useState({
+    status: "idle",
+    source: "fallback",
+    inventoryByRoomTypeCode: {},
+    error: "",
+  });
 
   const nights = useMemo(() => getBookingNights(searchState.range), [searchState.range]);
   const stayLabel = getStayLabel(nights);
 
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadAvailability() {
+      setAvailabilityState((current) => ({
+        ...current,
+        status: "loading",
+        error: "",
+      }));
+
+      try {
+        const nextAvailability = await fetchRoomTypeAvailability({
+          hotelId: hotelConfig.id,
+          rooms,
+          searchState,
+        });
+
+        if (!isActive) {
+          return;
+        }
+
+        setAvailabilityState({
+          status: "ready",
+          source: nextAvailability.source,
+          inventoryByRoomTypeCode: nextAvailability.inventoryByRoomTypeCode,
+          error: "",
+        });
+      } catch (error) {
+        if (!isActive) {
+          return;
+        }
+
+        setAvailabilityState({
+          status: "error",
+          source: "fallback",
+          inventoryByRoomTypeCode: {},
+          error: error?.message ?? "We could not verify live availability right now.",
+        });
+      }
+    }
+
+    loadAvailability();
+
+    return () => {
+      isActive = false;
+    };
+  }, [hotelConfig.id, rooms, searchState]);
+
+  const roomsWithAvailability = useMemo(
+    () =>
+      rooms.map((room) => {
+        const inventory = availabilityState.inventoryByRoomTypeCode[room.code];
+
+        if (!inventory) {
+          return room;
+        }
+
+        return {
+          ...room,
+          availableRoomCount: inventory.availableRoomCount,
+          reservedRoomCount: inventory.reservedCount,
+          totalInventory: inventory.totalInventory,
+          badge:
+            inventory.totalInventory === 0
+              ? "On Request"
+              : inventory.availableRoomCount > 0
+                ? `${inventory.availableRoomCount} Available`
+                : "Currently Full",
+        };
+      }),
+    [availabilityState.inventoryByRoomTypeCode, rooms],
+  );
+
   const availableRooms = useMemo(
-    () => rooms.filter((room) => roomMatchesBookingSearch(room, searchState)),
-    [searchState],
+    () => roomsWithAvailability.filter((room) => roomMatchesBookingSearch(room, searchState)),
+    [roomsWithAvailability, searchState],
   );
 
   const selectedRoom = useMemo(
@@ -93,6 +180,8 @@ function ReservationSection() {
   const handleSearch = (event) => {
     event.preventDefault();
 
+    buildAvailabilitySearchPayload({ hotel: hotelConfig, searchState });
+
     const nextQuery = new URLSearchParams({
       ...rangeToSearchParams(searchState.range),
       adults: String(searchState.adults),
@@ -103,9 +192,32 @@ function ReservationSection() {
     window.history.replaceState({}, "", `${window.location.pathname}?${nextQuery.toString()}`);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setBookingStep("confirmed");
+    if (!selectedRoom) {
+      return;
+    }
+
+    setSubmitState({ status: "submitting", error: "" });
+
+    try {
+      const reservationPayload = buildReservationPayload({
+        hotel: hotelConfig,
+        room: selectedRoom,
+        searchState,
+        guestState,
+      });
+
+      const confirmation = await submitReservationRequest(reservationPayload);
+      setReservationConfirmation(confirmation);
+      setBookingStep("confirmed");
+      setSubmitState({ status: "submitted", error: "" });
+    } catch (error) {
+      setSubmitState({
+        status: "error",
+        error: error?.message ?? "We could not submit your reservation request right now.",
+      });
+    }
   };
 
   const handleMobileAction = () => {
@@ -114,6 +226,11 @@ function ReservationSection() {
   };
 
   const selectedRoomQuote = selectedRoom ? buildRoomQuote(selectedRoom, nights, searchState.roomCount) : null;
+  const selectedRoomGallery = selectedRoom?.galleryImages?.length
+    ? selectedRoom.galleryImages
+    : selectedRoom
+      ? [{ image: selectedRoom.image, alt: `${selectedRoom.title} photo` }].filter((item) => item.image)
+      : [];
   const detailsStepClassName = selectedRoom
     ? "react-booking-step is-active"
     : "react-booking-step";
@@ -126,6 +243,46 @@ function ReservationSection() {
     <section id="section_form" className="relative">
       <div className="container">
         <div className="row g-4">
+          {loadState.status === "loading" ? (
+            <div className="col-lg-12">
+              <div className="alert alert-info">Loading live stay options...</div>
+            </div>
+          ) : null}
+          {loadState.status === "ready" ? (
+            <div className="col-lg-12">
+              <div className={`alert ${loadState.source === "supabase" ? "alert-success" : "alert-secondary"}`}>
+                {loadState.source === "supabase"
+                  ? "Live stay content is currently being served from Supabase."
+                  : "Stay content is currently using local fallback data."}
+              </div>
+            </div>
+          ) : null}
+          {loadState.status === "error" ? (
+            <div className="col-lg-12">
+              <div className="alert alert-warning">
+                Live room data could not be loaded, so fallback stay content is being shown for now.
+              </div>
+            </div>
+          ) : null}
+          {availabilityState.status === "loading" ? (
+            <div className="col-lg-12">
+              <div className="alert alert-info">Checking live availability for your selected dates...</div>
+            </div>
+          ) : null}
+          {availabilityState.status === "ready" && availabilityState.source === "supabase" ? (
+            <div className="col-lg-12">
+              <div className="alert alert-success">
+                Live availability is being calculated from room inventory and overlapping reservation requests.
+              </div>
+            </div>
+          ) : null}
+          {availabilityState.status === "error" ? (
+            <div className="col-lg-12">
+              <div className="alert alert-warning">
+                {availabilityState.error || "Live availability could not be verified right now, so only the local room filters are being used."}
+              </div>
+            </div>
+          ) : null}
           <div className="col-lg-12">
             <div className="react-booking-search-wrap">
               <div className="subtitle id-color mb-3">Book Your Stay</div>
@@ -280,6 +437,21 @@ function ReservationSection() {
                       </div>
 
                       <div className="react-room-rate-note">{room.rateNote}</div>
+                      {room.galleryImages?.length > 1 ? (
+                        <div className="react-room-amenities mt-3">
+                          {room.galleryImages.map((galleryImage, index) => (
+                            <a
+                              key={`${room.code}-gallery-${index}`}
+                              className="react-room-amenity"
+                              href={galleryImage.image}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              {`Photo ${index + 1}`}
+                            </a>
+                          ))}
+                        </div>
+                      ) : null}
                     </div>
 
                     <div className="react-room-card-price">
@@ -356,6 +528,25 @@ function ReservationSection() {
                       <span>{`${stayLabel} stay${searchState.roomCount > 1 ? ` | ${selectedRoomSummary?.roomCountLabel}` : ""}`}</span>
                     </div>
                   </div>
+
+                  {selectedRoomGallery.length > 0 ? (
+                    <div className="react-booking-policy-panel">
+                      <div className="subtitle id-color mb-2">Room Photo Gallery</div>
+                      <div className="row g-2">
+                        {selectedRoomGallery.map((galleryImage, index) => (
+                          <div className="col-6" key={`${selectedRoom.code}-selected-gallery-${index}`}>
+                            <a href={galleryImage.image} target="_blank" rel="noreferrer">
+                              <img
+                                src={galleryImage.image}
+                                alt={galleryImage.alt ?? `${selectedRoom.title} photo ${index + 1}`}
+                                style={{ width: "100%", borderRadius: 12, objectFit: "cover", aspectRatio: "1 / 1" }}
+                              />
+                            </a>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
 
                   <div className="react-booking-summary-block">
                     <div className="react-booking-summary-row">
@@ -441,16 +632,24 @@ function ReservationSection() {
 
                       <div className="react-booking-confirmation-list">
                         <div className="react-booking-confirmation-item">
+                          <strong>Request reference</strong>
+                          <span>{reservationConfirmation?.requestReference}</span>
+                        </div>
+                        <div className="react-booking-confirmation-item">
                           <strong>Selected room</strong>
-                          <span>{selectedRoom.title}</span>
+                          <span>{reservationConfirmation?.roomTitle ?? selectedRoom.title}</span>
                         </div>
                         <div className="react-booking-confirmation-item">
                           <strong>Guest</strong>
-                          <span>{guestState.name}</span>
+                          <span>{reservationConfirmation?.guestName ?? guestState.name}</span>
                         </div>
                         <div className="react-booking-confirmation-item">
                           <strong>Contact</strong>
-                          <span>{guestState.email}</span>
+                          <span>{reservationConfirmation?.guestEmail ?? guestState.email}</span>
+                        </div>
+                        <div className="react-booking-confirmation-item">
+                          <strong>Hotel scope</strong>
+                          <span>{hotelConfig.id}</span>
                         </div>
                       </div>
 
@@ -523,6 +722,12 @@ function ReservationSection() {
                           payment steps with you before finalizing the stay.
                         </div>
 
+                        {submitState.status === "error" ? (
+                          <div className="alert alert-danger mb-4" role="alert">
+                            {submitState.error}
+                          </div>
+                        ) : null}
+
                         <div className="react-booking-contact-row">
                           <a href={`tel:${footerContent.phone.replace(/\s+/g, "")}`}>
                             <Phone size={15} strokeWidth={2} />
@@ -534,7 +739,13 @@ function ReservationSection() {
                           </a>
                         </div>
 
-                        <input type="submit" id="send_message" value="Continue Reservation" className="btn-main" />
+                        <input
+                          type="submit"
+                          id="send_message"
+                          value={submitState.status === "submitting" ? "Submitting Request..." : "Continue Reservation"}
+                          className="btn-main"
+                          disabled={submitState.status === "submitting"}
+                        />
                       </form>
                     </>
                   )}

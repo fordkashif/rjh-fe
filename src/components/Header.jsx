@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { footerContent } from "../data/siteContent";
+import { usePublicHotelContent } from "../context/PublicHotelContentContext";
 
 const roomsMenuItems = [
   { label: "All Rooms Default", href: "/#section-rooms" },
@@ -39,6 +39,7 @@ const mobileNavItems = [
 ];
 
 function Header({ isSecondaryPage = false }) {
+  const { footerContent, hotel } = usePublicHotelContent();
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerState, setHeaderState] = useState("top");
   const [isMobileMenu, setIsMobileMenu] = useState(() =>
@@ -152,10 +153,10 @@ function Header({ isSecondaryPage = false }) {
             <div className="de-flex sm-pt10">
               <div className="de-flex-col">
                 <div id="logo">
-                  <a href="/" onClick={closeMenu}>
-                    <img className="logo-main" src="/images/logo-white.webp" alt="Almaris" />
-                    <img className="logo-scroll" src="/images/logo-black.webp" alt="Almaris" />
-                    <img className="logo-mobile" src="/images/logo-white.webp" alt="Almaris" />
+                    <a href="/" onClick={closeMenu}>
+                    <img className="logo-main react-site-logo" src="/images/royale-jazz-logo.png" alt={hotel.name} />
+                    <img className="logo-scroll react-site-logo react-site-logo-scroll" src="/images/royale-jazz-logo.png" alt={hotel.name} />
+                    <img className="logo-mobile react-site-logo" src="/images/royale-jazz-logo.png" alt={hotel.name} />
                   </a>
                 </div>
               </div>

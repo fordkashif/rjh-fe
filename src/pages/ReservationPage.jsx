@@ -9,22 +9,22 @@ function ReservationPage() {
         <img
           src="/images/background/3.webp"
           className="react-subheader-image"
-          alt="Almaris reservation"
+          alt="Royale Jazz Hotel reservation"
         />
         <div className="container relative z-index-1000">
           <div className="row justify-content-center">
             <div className="col-xl-8 col-lg-9 text-center">
               <div className="react-secondary-hero-content react-reservation-hero-content">
                 <div className="subtitle id-color mb-3">Direct Booking</div>
-                <h1>Reserve Your Stay at Almaris</h1>
+                <h1>Reserve Your Stay at Royale Jazz Hotel</h1>
                 <p className="react-secondary-hero-lead react-reservation-hero-lead">
-                  Search your dates, compare room types, and send your reservation request with
-                  clear pricing, direct support, and the details you need to book with confidence.
+                  Search your dates, review available stay options, and send a direct reservation
+                  request to Royale Jazz Hotel with support from the hotel team.
                 </p>
 
                 <div className="react-secondary-hero-pills react-reservation-hero-pills">
-                  <span>Best rate shown on site</span>
-                  <span>Flexible room options</span>
+                  <span>Direct reservation request</span>
+                  <span>Flexible stay options</span>
                   <span>Direct hotel support</span>
                 </div>
 

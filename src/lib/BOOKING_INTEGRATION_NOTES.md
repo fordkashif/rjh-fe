@@ -74,6 +74,23 @@ That means the UI should not be rewritten to depend directly on PMS/CRS response
 - confirmation:
   replace UI-only success state with reservation reference/confirmation payload
 
+## Supabase Direction
+- Supabase is a good fit for this project
+- keep hotel scoping explicit with `hotelId` on availability and reservation records
+- let the website submit normalized payloads, not direct table-shaped UI state
+- recommended initial tables:
+  - `organizations`
+  - `hotels`
+  - `room_types`
+  - `reservations`
+  - `reservation_guests`
+  - `reservation_audit_log`
+  - `user_hotel_access`
+- website helpers should build:
+  - availability search payload
+  - reservation insert payload
+  - confirmation shape returned to UI
+
 ## Important Constraint
 We should keep UI rendering coupled to normalized client-side shapes, not raw backend payloads.
 That will make future adapter work much smaller and safer.

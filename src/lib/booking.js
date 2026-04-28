@@ -88,6 +88,10 @@ export function roomMatchesBookingSearch(room, searchState) {
     return false;
   }
 
+  if (Number.isFinite(room.availableRoomCount) && room.availableRoomCount < searchState.roomCount) {
+    return false;
+  }
+
   return true;
 }
 

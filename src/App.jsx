@@ -1,5 +1,6 @@
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import { PublicHotelContentProvider } from "./context/PublicHotelContentContext";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import HomePage from "./pages/HomePage";
@@ -23,15 +24,17 @@ function App() {
   }
 
   return (
-    <div id="wrapper">
-      <a href="#top" id="back-to-top" />
+    <PublicHotelContentProvider>
+      <div id="wrapper">
+        <a href="#top" id="back-to-top" />
 
-      <Header isSecondaryPage={isSecondaryPage} />
+        <Header isSecondaryPage={isSecondaryPage} />
 
-      {page}
+        {page}
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </PublicHotelContentProvider>
   );
 }
 

@@ -8,7 +8,7 @@ import {
   Phone,
   ShieldCheck,
 } from "lucide-react";
-import { footerContent } from "../data/siteContent";
+import { usePublicHotelContent } from "../context/PublicHotelContentContext";
 
 const initialFormState = {
   name: "",
@@ -17,33 +17,6 @@ const initialFormState = {
   subject: "Reservation Help",
   message: "",
 };
-
-const supportCards = [
-  {
-    icon: Phone,
-    eyebrow: "Call The Hotel",
-    title: "Front Desk & Reservations",
-    detail: footerContent.phone,
-    href: `tel:${footerContent.phone.replace(/\s+/g, "")}`,
-    note: "Best for same-day questions, arrival timing, and booking support.",
-  },
-  {
-    icon: Mail,
-    eyebrow: "Email Support",
-    title: "Guest Services",
-    detail: footerContent.email,
-    href: `mailto:${footerContent.email}`,
-    note: "Best for follow-up questions, written requests, and special arrangements.",
-  },
-  {
-    icon: MapPin,
-    eyebrow: "Visit Us",
-    title: "Hotel Address",
-    detail: footerContent.address.join(", "),
-    href: "https://maps.google.com/?q=742+Evergreen+Terrace+Brooklyn,+NY+11201",
-    note: "Open directions in your preferred maps app before arrival.",
-  },
-];
 
 const supportLanes = [
   {
@@ -64,10 +37,40 @@ const supportLanes = [
 ];
 
 function ContactPage() {
+  const { footerContent, hotel } = usePublicHotelContent();
   const [formData, setFormData] = useState(initialFormState);
   const [submitted, setSubmitted] = useState(false);
 
-  const locationLabel = useMemo(() => footerContent.address.join(", "), []);
+  const locationLabel = useMemo(() => footerContent.address.join(", "), [footerContent.address]);
+  const supportCards = useMemo(
+    () => [
+      {
+        icon: Phone,
+        eyebrow: "Call The Hotel",
+        title: "Front Desk & Reservations",
+        detail: footerContent.phone,
+        href: `tel:${footerContent.phone.replace(/\s+/g, "")}`,
+        note: "Best for same-day questions, arrival timing, and booking support.",
+      },
+      {
+        icon: Mail,
+        eyebrow: "Email Support",
+        title: "Guest Services",
+        detail: footerContent.email,
+        href: `mailto:${footerContent.email}`,
+        note: "Best for follow-up questions, written requests, and special arrangements.",
+      },
+      {
+        icon: MapPin,
+        eyebrow: "Visit Us",
+        title: "Hotel Address",
+        detail: footerContent.address.join(", "),
+        href: hotel.mapDirectionsUrl ?? "https://maps.google.com/?q=58+Westminster+Ave+Kingston+Jamaica",
+        note: "Open directions in your preferred maps app before arrival.",
+      },
+    ],
+    [footerContent.address, footerContent.email, footerContent.phone, hotel.mapDirectionsUrl],
+  );
 
   const updateField = (field, value) => {
     setFormData((current) => ({ ...current, [field]: value }));
@@ -86,17 +89,16 @@ function ContactPage() {
         <img
           src="/images/background/3.webp"
           className="react-subheader-image"
-          alt="Contact Almaris"
+          alt="Contact Royale Jazz Hotel"
         />
         <div className="container relative z-index-1000">
           <div className="row justify-content-center">
             <div className="col-xl-8 col-lg-9 text-center">
               <div className="react-secondary-hero-content react-contact-hero-content">
                 <div className="subtitle id-color mb-3">Guest Support</div>
-                <h1>Contact Almaris</h1>
+                <h1>{hotel.contactHeroHeading ?? "Contact Royale Jazz Hotel"}</h1>
                 <p className="react-secondary-hero-lead react-contact-hero-lead">
-                  Whether you are planning a stay, updating an existing reservation, or simply need
-                  help before arrival, our team is here to make the next step easy.
+                  {hotel.contactHeroText ?? "Whether you are planning a stay, updating an existing reservation, or simply need help before arrival, our team is here to make the next step easy."}
                 </p>
 
                 <div className="react-secondary-hero-pills react-contact-hero-pills">
@@ -144,8 +146,7 @@ function ContactPage() {
                 <div className="subtitle id-color mb-3">Reach Us Directly</div>
                 <h2 className="mb-3">We keep contact simple.</h2>
                 <p className="react-contact-intro">
-                  Use the form for detailed requests, or contact the hotel directly if you need a
-                  faster answer about your stay.
+                  {hotel.contactIntro ?? "Use the form for detailed requests, or contact the hotel directly if you need a faster answer about your stay."}
                 </p>
 
                 <div className="react-contact-card-list">
@@ -203,8 +204,8 @@ function ContactPage() {
                     </div>
                     <h3>Message received.</h3>
                     <p>
-                      Thanks for reaching out. A member of the Almaris team will review your
-                      request and contact you using the details you provided.
+                      Thanks for reaching out. A member of the Royale Jazz Hotel team will review
+                      your request and contact you using the details you provided.
                     </p>
                     <div className="react-contact-success-grid">
                       <div>
@@ -324,8 +325,8 @@ function ContactPage() {
             <div className="col-lg-6">
               <div className="react-contact-map-wrap">
                 <iframe
-                  title="Almaris location"
-                  src="https://www.google.com/maps?q=742+Evergreen+Terrace+Brooklyn,+NY+11201&output=embed"
+                  title={`${hotel.name} location`}
+                  src={hotel.mapEmbedUrl ?? "https://www.google.com/maps?q=58+Westminster+Ave+Kingston+Jamaica&output=embed"}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 />
@@ -336,10 +337,7 @@ function ContactPage() {
               <div className="react-contact-location-panel react-secondary-surface">
                 <div className="subtitle id-color mb-3">Location</div>
                 <h2 className="mb-3">Plan your arrival with confidence.</h2>
-                <p>
-                  Almaris is positioned for easy access to the city while still giving guests a
-                  quieter place to settle in, arrive well, and start their stay smoothly.
-                </p>
+                <p>{hotel.contactLocationText ?? "Royale Jazz Hotel places guests close to Kingston highlights including Devon House, the Bob Marley Museum, Half-Way-Tree, and nearby dining and nightlife options just minutes away."}</p>
 
                 <div className="react-contact-location-list">
                   <div className="react-contact-location-item">
@@ -353,7 +351,7 @@ function ContactPage() {
                   <div className="react-contact-location-item">
                     <span>Directions</span>
                     <strong>
-                      <a href="https://maps.google.com/?q=742+Evergreen+Terrace+Brooklyn,+NY+11201" target="_blank" rel="noreferrer">
+                      <a href={hotel.mapDirectionsUrl ?? "https://maps.google.com/?q=58+Westminster+Ave+Kingston+Jamaica"} target="_blank" rel="noreferrer">
                         Open in Google Maps
                       </a>
                     </strong>
