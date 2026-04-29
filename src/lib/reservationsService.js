@@ -1,4 +1,3 @@
-import { createReservationConfirmation } from "./bookingApi";
 import { isSupabaseConfigured, supabase } from "./supabaseClient";
 
 function requireConfiguredReservationClient() {
@@ -24,34 +23,6 @@ function isReservationBlocking(status) {
 
 function isRoomBookable(status) {
   return !["out_of_service", "maintenance", "blocked"].includes(String(status ?? "").toLowerCase());
-}
-
-async function sendReservationRequestEmails(payload, reservationId) {
-  const { data, error } = await supabase.functions.invoke("send-reservation-request-emails", {
-    body: {
-      reservationId,
-      requestReference: payload.requestReference,
-      hotelId: payload.hotelId,
-      guest: payload.guest,
-      stay: {
-        roomTitle: payload.roomTitle,
-        roomTypeCode: payload.roomTypeCode,
-        checkIn: payload.stay.checkIn,
-        checkOut: payload.stay.checkOut,
-        nights: payload.stay.nights,
-        roomCount: payload.stay.roomCount,
-        adults: payload.stay.adults,
-        children: payload.stay.children,
-      },
-      pricing: payload.pricing,
-      meta: {
-        websiteDomain: payload.metadata?.websiteDomain,
-        submittedAt: new Date().toISOString(),
-      },
-    },
-  });
-
-  return { data, error };
 }
 
 export async function fetchRoomTypeAvailability({ hotelId, rooms, searchState, range }) {
@@ -130,93 +101,27 @@ export async function fetchRoomTypeAvailability({ hotelId, rooms, searchState, r
 
 export async function submitReservationRequest(payload) {
   requireConfiguredReservationClient();
+  const { data, error } = await supabase.functions.invoke("create-public-reservation-request", {
+    body: payload,
+  });
 
-  const availability = await fetchRoomTypeAvailability({
+  if (error) {
+    throw error;
+  }
+
+  if (!data?.ok) {
+    throw new Error(data?.error ?? "Your reservation request could not be sent just now. Please try again.");
+  }
+
+  return {
+    requestReference: data.requestReference,
     hotelId: payload.hotelId,
-    rooms: [],
-    range: {
-      checkIn: payload.stay.checkIn,
-      checkOut: payload.stay.checkOut,
-    },
-  });
-
-  const roomAvailability = availability.inventoryByRoomTypeCode[payload.roomTypeCode];
-
-  if (roomAvailability && roomAvailability.availableRoomCount < payload.stay.roomCount) {
-    throw new Error("This room type is no longer available for the selected dates. Please refresh your search and try again.");
-  }
-
-  const reservationInsert = {
-    request_reference: payload.requestReference,
-    organization_id: payload.organizationId,
-    hotel_id: payload.hotelId,
-    source: payload.source,
-    status: payload.status,
-    room_type_code: payload.roomTypeCode,
-    room_title: payload.roomTitle,
-    check_in: payload.stay.checkIn,
-    check_out: payload.stay.checkOut,
-    nights: payload.stay.nights,
-    room_count: payload.stay.roomCount,
-    adults: payload.stay.adults,
-    children: payload.stay.children,
-    currency: payload.pricing.currency,
-    nightly_rate: payload.pricing.nightlyRate,
-    subtotal: payload.pricing.subtotal,
-    taxes_and_fees: payload.pricing.taxesAndFees,
-    estimated_total: payload.pricing.estimatedTotal,
-    guest_message: payload.guest.message,
-    metadata: payload.metadata,
+    roomTitle: data.roomTitle ?? payload.roomTitle,
+    guestName: data.guestName ?? payload.guest.name,
+    guestEmail: data.guestEmail ?? payload.guest.email,
+    estimatedTotal: data.estimatedTotal ?? payload.pricing.estimatedTotal,
+    status: data.status ?? payload.status,
+    reservationId: data.reservationId,
+    emailDeliveryStatus: data.emailDeliveryStatus ?? "failed",
   };
-
-  const { data: reservationData, error: reservationError } = await supabase
-    .from("reservations")
-    .insert(reservationInsert)
-    .select("id")
-    .single();
-
-  if (reservationError) {
-    throw reservationError;
-  }
-
-  const { error: guestError } = await supabase.from("reservation_guests").insert({
-    reservation_id: reservationData.id,
-    full_name: payload.guest.name,
-    email: payload.guest.email,
-    phone: payload.guest.phone,
-  });
-
-  if (guestError) {
-    throw guestError;
-  }
-
-  const { error: auditError } = await supabase.from("reservation_audit_log").insert({
-    reservation_id: reservationData.id,
-    event_type: "reservation_requested",
-    event_data: {
-      request_reference: payload.requestReference,
-      source: payload.source,
-      website_domain: payload.metadata.websiteDomain,
-    },
-  });
-
-  if (auditError) {
-    throw auditError;
-  }
-
-  const emailResult = await sendReservationRequestEmails(payload, reservationData.id);
-
-  if (emailResult.error) {
-    console.error("Reservation emails could not be sent", emailResult.error);
-  } else if (emailResult.data?.ok === false) {
-    console.error("Reservation email delivery reported a handled failure", emailResult.data);
-  }
-
-  return createReservationConfirmation(payload, {
-    reservationId: reservationData.id,
-    emailDeliveryStatus:
-      emailResult.error || emailResult.data?.ok === false
-        ? "failed"
-        : "sent",
-  });
 }
