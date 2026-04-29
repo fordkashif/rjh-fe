@@ -8,6 +8,46 @@ function RoomsSection() {
   const { loadState, rooms } = usePublicHotelContent();
   const isLaunchLayout = rooms.length <= 2;
 
+  if (loadState.status === "loading") {
+    return (
+      <section id="section-rooms" className="relative bg-light lines-deco">
+        <div className="container relative z-2">
+          <div className="alert alert-info mb-0">A closer look at our rooms is on the way.</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (loadState.status === "error") {
+    return (
+      <section id="section-rooms" className="relative bg-light lines-deco">
+        <div className="container relative z-2">
+          <div className="alert alert-warning mb-0">
+            {loadState.error || "Our room details are taking a little longer than usual to load."}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (rooms.length === 0) {
+    return (
+      <section id="section-rooms" className="relative bg-light lines-deco">
+        <div className="container relative z-2">
+          <div className="row g-4">
+            <div className="col-lg-8 offset-lg-2 text-center">
+              <div className="subtitle id-color mb-3">Accommodation</div>
+              <h2>Room Types Coming Soon</h2>
+              <p className="mb-0">
+                We are preparing the room collection for online viewing. Please check back soon.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="section-rooms" className="relative bg-light lines-deco">
       <div className="container relative z-2">
@@ -19,11 +59,6 @@ function RoomsSection() {
               Launching with two suite options designed for comfort, convenience, and easy direct
               booking.
             </p>
-            <div className="mt-3">
-              <span className={`badge light ${loadState.source === "supabase" ? "badge-success" : "badge-warning"}`}>
-                {loadState.source === "supabase" ? "Live Supabase room data" : "Fallback room data"}
-              </span>
-            </div>
           </div>
 
           {isLaunchLayout ? (

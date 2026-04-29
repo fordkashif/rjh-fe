@@ -1,8 +1,10 @@
 import { createReservationConfirmation } from "./bookingApi";
 import { isSupabaseConfigured, supabase } from "./supabaseClient";
 
-function buildMockReservationResult(payload) {
-  return createReservationConfirmation(payload);
+function requireConfiguredReservationClient() {
+  if (!isSupabaseConfigured || !supabase) {
+    throw new Error("Online reservations are temporarily unavailable. Please try again shortly.");
+  }
 }
 
 function normalizeDateRange(range) {
@@ -24,27 +26,8 @@ function isRoomBookable(status) {
   return !["out_of_service", "maintenance", "blocked"].includes(String(status ?? "").toLowerCase());
 }
 
-function buildFallbackAvailability(rooms) {
-  return Object.fromEntries(
-    rooms.map((room) => [
-      room.code,
-      {
-        roomTypeCode: room.code,
-        totalInventory: Number.POSITIVE_INFINITY,
-        reservedCount: 0,
-        availableRoomCount: Number.POSITIVE_INFINITY,
-      },
-    ]),
-  );
-}
-
 export async function fetchRoomTypeAvailability({ hotelId, rooms, searchState, range }) {
-  if (!isSupabaseConfigured || !supabase) {
-    return {
-      source: "fallback",
-      inventoryByRoomTypeCode: buildFallbackAvailability(rooms),
-    };
-  }
+  requireConfiguredReservationClient();
 
   const stay = range ?? normalizeDateRange({
     checkIn: searchState.range.from.toISOString().slice(0, 10),
@@ -118,9 +101,7 @@ export async function fetchRoomTypeAvailability({ hotelId, rooms, searchState, r
 }
 
 export async function submitReservationRequest(payload) {
-  if (!isSupabaseConfigured || !supabase) {
-    return buildMockReservationResult(payload);
-  }
+  requireConfiguredReservationClient();
 
   const availability = await fetchRoomTypeAvailability({
     hotelId: payload.hotelId,

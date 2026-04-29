@@ -59,7 +59,6 @@ function ReservationSection() {
   const [submitState, setSubmitState] = useState({ status: "idle", error: "" });
   const [availabilityState, setAvailabilityState] = useState({
     status: "idle",
-    source: "fallback",
     inventoryByRoomTypeCode: {},
     error: "",
   });
@@ -90,7 +89,6 @@ function ReservationSection() {
 
         setAvailabilityState({
           status: "ready",
-          source: nextAvailability.source,
           inventoryByRoomTypeCode: nextAvailability.inventoryByRoomTypeCode,
           error: "",
         });
@@ -101,9 +99,8 @@ function ReservationSection() {
 
         setAvailabilityState({
           status: "error",
-          source: "fallback",
           inventoryByRoomTypeCode: {},
-          error: error?.message ?? "We could not verify live availability right now.",
+          error: error?.message ?? "We couldn't refresh availability right now.",
         });
       }
     }
@@ -215,7 +212,7 @@ function ReservationSection() {
     } catch (error) {
       setSubmitState({
         status: "error",
-        error: error?.message ?? "We could not submit your reservation request right now.",
+        error: error?.message ?? "Your reservation request could not be sent just now. Please try again.",
       });
     }
   };
@@ -239,47 +236,61 @@ function ReservationSection() {
     : "react-booking-step";
   const resultsCountLabel = `${availableRooms.length} stay${availableRooms.length === 1 ? "" : "s"} available`;
 
+  if (loadState.status === "loading") {
+    return (
+      <section id="section_form" className="relative">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="alert alert-info mb-0">Preparing your booking options...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (loadState.status === "error") {
+    return (
+      <section id="section_form" className="relative">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="alert alert-warning mb-0">
+                <strong>Online booking is temporarily unavailable.</strong>
+                <div className="mt-2">{loadState.error || "Please try again in a moment or contact the hotel directly."}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (rooms.length === 0) {
+    return (
+      <section id="section_form" className="relative">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="alert alert-secondary mb-0">
+                Online reservations will be available here shortly. For immediate help, please contact the hotel directly.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="section_form" className="relative">
       <div className="container">
         <div className="row g-4">
-          {loadState.status === "loading" ? (
-            <div className="col-lg-12">
-              <div className="alert alert-info">Loading live stay options...</div>
-            </div>
-          ) : null}
-          {loadState.status === "ready" ? (
-            <div className="col-lg-12">
-              <div className={`alert ${loadState.source === "supabase" ? "alert-success" : "alert-secondary"}`}>
-                {loadState.source === "supabase"
-                  ? "Live stay content is currently being served from Supabase."
-                  : "Stay content is currently using local fallback data."}
-              </div>
-            </div>
-          ) : null}
-          {loadState.status === "error" ? (
-            <div className="col-lg-12">
-              <div className="alert alert-warning">
-                Live room data could not be loaded, so fallback stay content is being shown for now.
-              </div>
-            </div>
-          ) : null}
-          {availabilityState.status === "loading" ? (
-            <div className="col-lg-12">
-              <div className="alert alert-info">Checking live availability for your selected dates...</div>
-            </div>
-          ) : null}
-          {availabilityState.status === "ready" && availabilityState.source === "supabase" ? (
-            <div className="col-lg-12">
-              <div className="alert alert-success">
-                Live availability is being calculated from room inventory and overlapping reservation requests.
-              </div>
-            </div>
-          ) : null}
           {availabilityState.status === "error" ? (
             <div className="col-lg-12">
               <div className="alert alert-warning">
-                {availabilityState.error || "Live availability could not be verified right now, so only the local room filters are being used."}
+                {availabilityState.error || "Availability could not be refreshed just now. Please try again."}
               </div>
             </div>
           ) : null}
@@ -374,10 +385,9 @@ function ReservationSection() {
                   <div className="react-room-empty-icon">
                     <Search size={26} strokeWidth={2} />
                   </div>
-                  <h3>No stays match this search yet.</h3>
+                  <h3>No stays matched these dates.</h3>
                   <p>
-                    Try fewer rooms, fewer adults, or adjust your dates. You can also contact the
-                    hotel team directly and we will help you find the best available option.
+                    Try adjusting your dates or guest count, or contact the hotel team directly for help finding the best option.
                   </p>
                   <div className="react-booking-contact-row">
                     <a href={`tel:${footerContent.phone.replace(/\s+/g, "")}`}>
@@ -471,7 +481,7 @@ function ReservationSection() {
                       <div className="react-room-trust-list">
                         <span>
                           <BadgeCheck size={15} strokeWidth={2} />
-                          Direct booking benefit included
+                          Direct hotel support included
                         </span>
                         <span>
                           <ShieldCheck size={15} strokeWidth={2} />
@@ -479,7 +489,7 @@ function ReservationSection() {
                         </span>
                         <span>
                           <CalendarDays size={15} strokeWidth={2} />
-                          Changeable before final confirmation
+                          Flexible before final confirmation
                         </span>
                       </div>
                       <button
@@ -648,8 +658,8 @@ function ReservationSection() {
                           <span>{reservationConfirmation?.guestEmail ?? guestState.email}</span>
                         </div>
                         <div className="react-booking-confirmation-item">
-                          <strong>Hotel scope</strong>
-                          <span>{hotelConfig.id}</span>
+                          <strong>Hotel</strong>
+                          <span>{hotelConfig.name}</span>
                         </div>
                       </div>
 
@@ -670,8 +680,7 @@ function ReservationSection() {
                     <>
                       <div className="subtitle id-color mb-2">Guest Details</div>
                       <p className="react-booking-step-note">
-                        Enter your contact details so we can confirm availability and finalize the
-                        next booking steps for this stay.
+                        Share your details and the hotel team will guide you through the next step for this stay.
                       </p>
 
                       <form id="contact_form" className="form-border react-booking-guest-form" onSubmit={handleSubmit}>
@@ -718,8 +727,7 @@ function ReservationSection() {
                         />
 
                         <div className="react-booking-policy-note">
-                          Secure request. We will confirm availability, cancellation terms, and next
-                          payment steps with you before finalizing the stay.
+                          Your request will be reviewed by the hotel team before the stay is finalized.
                         </div>
 
                         {submitState.status === "error" ? (
@@ -754,8 +762,8 @@ function ReservationSection() {
                 <>
                   <p className="mb-3">
                     {availableRooms.length === 0
-                      ? "Update your search to see available stays, then choose a room to continue."
-                      : "Select a room from the available stays list to unlock the guest details step and continue your booking."}
+                      ? "Update your search to view available stays and continue."
+                      : "Choose your preferred stay to continue with guest details."}
                   </p>
                   <div className="react-booking-contact-row mb-0">
                     <a href={`tel:${footerContent.phone.replace(/\s+/g, "")}`}>
