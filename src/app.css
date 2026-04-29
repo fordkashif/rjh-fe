@@ -8,6 +8,10 @@ body {
   margin: 0;
 }
 
+body.react-mobile-menu-open {
+  overflow: hidden;
+}
+
 .react-bg-cover {
   background-position: center;
   background-repeat: no-repeat;
@@ -1880,6 +1884,10 @@ header.react-site-header.react-site-header-secondary.smaller .react-secondary-to
 }
 
 @media (max-width: 992px) {
+  header.react-site-header {
+    overflow: visible;
+  }
+
   .react-about-image-block {
     min-height: 0;
   }
@@ -1941,7 +1949,7 @@ header.react-site-header.react-site-header-secondary.smaller .react-secondary-to
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.25s ease;
-    z-index: 1398;
+    z-index: 9997;
   }
 
   .react-mobile-menu-backdrop.is-open {
@@ -1951,11 +1959,10 @@ header.react-site-header.react-site-header-secondary.smaller .react-secondary-to
 
   .react-mobile-menu-drawer {
     position: fixed;
-    top: 86px;
     left: 0;
     right: 0;
-    max-height: calc(100vh - 86px);
-    padding: 18px 20px 140px;
+    bottom: 0;
+    padding: 10px 20px 28px;
     overflow-y: auto;
     background: rgba(24, 24, 24, 0.98);
     transform: translateY(-12px);
@@ -1964,12 +1971,7 @@ header.react-site-header.react-site-header-secondary.smaller .react-secondary-to
     transition:
       transform 0.25s ease,
       opacity 0.25s ease;
-    z-index: 1399;
-  }
-
-  header.react-site-header.has-topbar .react-mobile-menu-drawer {
-    top: 126px;
-    max-height: calc(100vh - 126px);
+    z-index: 9998;
   }
 
   .react-mobile-menu-drawer.is-open {
