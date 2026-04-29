@@ -57,7 +57,7 @@ export function buildReservationPayload({ hotel, room, searchState, guestState }
   };
 }
 
-export function createReservationConfirmation(payload) {
+export function createReservationConfirmation(payload, options = {}) {
   return {
     requestReference: payload.requestReference,
     hotelId: payload.hotelId,
@@ -66,5 +66,6 @@ export function createReservationConfirmation(payload) {
     guestEmail: payload.guest.email,
     estimatedTotal: payload.pricing.estimatedTotal,
     status: payload.status,
+    ...options,
   };
 }

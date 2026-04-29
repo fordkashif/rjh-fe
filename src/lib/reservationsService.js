@@ -26,6 +26,34 @@ function isRoomBookable(status) {
   return !["out_of_service", "maintenance", "blocked"].includes(String(status ?? "").toLowerCase());
 }
 
+async function sendReservationRequestEmails(payload, reservationId) {
+  const { data, error } = await supabase.functions.invoke("send-reservation-request-emails", {
+    body: {
+      reservationId,
+      requestReference: payload.requestReference,
+      hotelId: payload.hotelId,
+      guest: payload.guest,
+      stay: {
+        roomTitle: payload.roomTitle,
+        roomTypeCode: payload.roomTypeCode,
+        checkIn: payload.stay.checkIn,
+        checkOut: payload.stay.checkOut,
+        nights: payload.stay.nights,
+        roomCount: payload.stay.roomCount,
+        adults: payload.stay.adults,
+        children: payload.stay.children,
+      },
+      pricing: payload.pricing,
+      meta: {
+        websiteDomain: payload.metadata?.websiteDomain,
+        submittedAt: new Date().toISOString(),
+      },
+    },
+  });
+
+  return { data, error };
+}
+
 export async function fetchRoomTypeAvailability({ hotelId, rooms, searchState, range }) {
   requireConfiguredReservationClient();
 
@@ -176,5 +204,19 @@ export async function submitReservationRequest(payload) {
     throw auditError;
   }
 
-  return createReservationConfirmation(payload);
+  const emailResult = await sendReservationRequestEmails(payload, reservationData.id);
+
+  if (emailResult.error) {
+    console.error("Reservation emails could not be sent", emailResult.error);
+  } else if (emailResult.data?.ok === false) {
+    console.error("Reservation email delivery reported a handled failure", emailResult.data);
+  }
+
+  return createReservationConfirmation(payload, {
+    reservationId: reservationData.id,
+    emailDeliveryStatus:
+      emailResult.error || emailResult.data?.ok === false
+        ? "failed"
+        : "sent",
+  });
 }
