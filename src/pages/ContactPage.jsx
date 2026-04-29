@@ -9,6 +9,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { usePublicHotelContent } from "../context/PublicHotelContentContext";
+import { isSupabaseConfigured, supabase } from "../lib/supabaseClient";
 
 const initialFormState = {
   name: "",
@@ -39,7 +40,7 @@ const supportLanes = [
 function ContactPage() {
   const { footerContent, hotel } = usePublicHotelContent();
   const [formData, setFormData] = useState(initialFormState);
-  const [submitted, setSubmitted] = useState(false);
+  const [submitState, setSubmitState] = useState({ status: "idle", error: "" });
 
   const locationLabel = useMemo(() => footerContent.address.join(", "), [footerContent.address]);
   const supportCards = useMemo(
@@ -76,9 +77,50 @@ function ContactPage() {
     setFormData((current) => ({ ...current, [field]: value }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setSubmitted(true);
+
+    if (!isSupabaseConfigured || !supabase) {
+      setSubmitState({
+        status: "error",
+        error: "Contact support is temporarily unavailable. Please call or email the hotel directly.",
+      });
+      return;
+    }
+
+    setSubmitState({ status: "submitting", error: "" });
+
+    const { data, error } = await supabase.functions.invoke("send-contact-form-email", {
+      body: {
+        hotelId: hotel.id,
+        guest: {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+        },
+        message: {
+          subject: formData.subject,
+          body: formData.message,
+        },
+        meta: {
+          submittedAt: new Date().toISOString(),
+          page: "/contact",
+        },
+      },
+    });
+
+    if (error || !data?.ok) {
+      setSubmitState({
+        status: "error",
+        error:
+          data?.error ??
+          error?.message ??
+          "Your message could not be sent just now. Please try again or contact the hotel directly.",
+      });
+      return;
+    }
+
+    setSubmitState({ status: "submitted", error: "" });
   };
 
   return (
@@ -197,7 +239,7 @@ function ContactPage() {
                   your request.
                 </p>
 
-                {submitted ? (
+                {submitState.status === "submitted" ? (
                   <div className="react-contact-success">
                     <div className="react-contact-success-mark">
                       <ShieldCheck size={26} strokeWidth={2.2} />
@@ -309,8 +351,21 @@ function ContactPage() {
                         We will use your details only to respond to your inquiry and help with your
                         stay.
                       </div>
-                      <input type="submit" id="send_message" value="Send Message" className="btn-main" />
+                      <input
+                        type="submit"
+                        id="send_message"
+                        value={submitState.status === "submitting" ? "Sending..." : "Send Message"}
+                        className="btn-main"
+                        disabled={submitState.status === "submitting"}
+                      />
                     </div>
+
+                    {submitState.status === "error" ? (
+                      <div className="alert alert-warning mt-3 mb-0">
+                        <strong>We couldn't send your message right now.</strong>
+                        <div>{submitState.error}</div>
+                      </div>
+                    ) : null}
                   </form>
                 )}
               </div>
