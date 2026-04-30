@@ -16,10 +16,10 @@ function ReservationPage() {
             <div className="col-xl-8 col-lg-9 text-center">
               <div className="react-secondary-hero-content react-reservation-hero-content">
                 <div className="subtitle id-color mb-3">Direct Booking</div>
-                <h1>Reserve Your Stay at Royale Jazz Hotel</h1>
+                <h1>Reservation</h1>
                 <p className="react-secondary-hero-lead react-reservation-hero-lead">
-                  Search your dates, review available stay options, and send a direct reservation
-                  request to Royale Jazz Hotel with support from the hotel team.
+                  Search availability, compare room options, and send your request directly to the
+                  hotel team.
                 </p>
 
                 <div className="react-secondary-hero-pills react-reservation-hero-pills">

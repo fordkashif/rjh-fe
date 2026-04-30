@@ -41,7 +41,7 @@ function HeroSection() {
                             {slide.text}
                           </p>
                           <div className="spacer-30" />
-                          <a className="btn-main mb10 mb-3" href="#section-rooms">
+                          <a className="btn-main mb10 mb-3" href="/rooms">
                             Discover Rooms
                           </a>
                         </div>

@@ -17,6 +17,7 @@ import DateRangeField, {
   rangeToSearchParams,
 } from "../DateRangeField";
 import ReservationCounter from "../ReservationCounter";
+import RoomPhotoLightbox from "../RoomPhotoLightbox";
 import { usePublicHotelContent } from "../../context/PublicHotelContentContext";
 import {
   buildBookingSummary,
@@ -61,6 +62,10 @@ function ReservationSection() {
     status: "idle",
     inventoryByRoomTypeCode: {},
     error: "",
+  });
+  const [lightboxState, setLightboxState] = useState({
+    roomTitle: null,
+    activeIndex: 0,
   });
 
   const nights = useMemo(() => getBookingNights(searchState.range), [searchState.range]);
@@ -228,6 +233,17 @@ function ReservationSection() {
     : selectedRoom
       ? [{ image: selectedRoom.image, alt: `${selectedRoom.title} photo` }].filter((item) => item.image)
       : [];
+  const activeLightboxRoom = useMemo(
+    () => roomsWithAvailability.find((room) => room.title === lightboxState.roomTitle) ?? null,
+    [lightboxState.roomTitle, roomsWithAvailability],
+  );
+  const activeLightboxImages = activeLightboxRoom?.galleryImages?.length
+    ? activeLightboxRoom.galleryImages
+    : activeLightboxRoom
+      ? [{ image: activeLightboxRoom.image, alt: `${activeLightboxRoom.title} photo` }].filter(
+        (item) => item.image,
+      )
+      : [];
   const detailsStepClassName = selectedRoom
     ? "react-booking-step is-active"
     : "react-booking-step";
@@ -235,6 +251,17 @@ function ReservationSection() {
     ? "react-booking-step is-active"
     : "react-booking-step";
   const resultsCountLabel = `${availableRooms.length} stay${availableRooms.length === 1 ? "" : "s"} available`;
+
+  const openGallery = (room, index = 0) => {
+    if (!room) {
+      return;
+    }
+
+    setLightboxState({
+      roomTitle: room.title,
+      activeIndex: index,
+    });
+  };
 
   if (loadState.status === "loading") {
     return (
@@ -294,10 +321,14 @@ function ReservationSection() {
               </div>
             </div>
           ) : null}
-          <div className="col-lg-12">
+          <div className="col-lg-12 react-booking-search-priority">
             <div className="react-booking-search-wrap">
-              <div className="subtitle id-color mb-3">Book Your Stay</div>
-              <h2 className="mb-4">Search Availability</h2>
+              <div className="subtitle id-color mb-3">Direct Booking</div>
+              <h2 className="mb-3">Reserve Your Stay</h2>
+              <p className="react-booking-results-note mb-4">
+                Search your dates first, then compare the available room options before sending
+                your reservation request.
+              </p>
 
               <form className="react-booking-search-grid" onSubmit={handleSearch}>
                 <div className="react-booking-search-cell react-booking-search-date">
@@ -346,7 +377,7 @@ function ReservationSection() {
           <div className="col-lg-8" id="booking-results">
             <div id="booking_form_title" className="react-booking-results-head">
               <div>
-                <div className="subtitle id-color mb-3">Select Your Room</div>
+                <div className="subtitle id-color mb-3">Search Results</div>
                 <h2 className="mb-2">Available Stays</h2>
                 <p className="react-booking-results-note mb-0">
                   Compare room types, rate terms, and estimated totals before continuing to guest
@@ -410,8 +441,24 @@ function ReservationSection() {
                     key={room.title}
                   >
                     <div className="react-room-card-image">
-                      <img src={room.image} alt={room.title} />
+                      <button
+                        type="button"
+                        className="react-room-gallery-trigger"
+                        aria-label={`Open ${room.title} gallery`}
+                        onClick={() => openGallery(room)}
+                      >
+                        <img src={room.image} alt={room.title} />
+                      </button>
                       <div className="react-room-image-badge">{room.badge}</div>
+                      {room.galleryImages?.length > 0 ? (
+                        <button
+                          type="button"
+                          className="react-room-gallery-pill"
+                          onClick={() => openGallery(room)}
+                        >
+                          {`${room.galleryImages.length} photos`}
+                        </button>
+                      ) : null}
                     </div>
 
                     <div className="react-room-card-body">
@@ -447,21 +494,6 @@ function ReservationSection() {
                       </div>
 
                       <div className="react-room-rate-note">{room.rateNote}</div>
-                      {room.galleryImages?.length > 1 ? (
-                        <div className="react-room-amenities mt-3">
-                          {room.galleryImages.map((galleryImage, index) => (
-                            <a
-                              key={`${room.code}-gallery-${index}`}
-                              className="react-room-amenity"
-                              href={galleryImage.image}
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              {`Photo ${index + 1}`}
-                            </a>
-                          ))}
-                        </div>
-                      ) : null}
                     </div>
 
                     <div className="react-room-card-price">
@@ -532,7 +564,14 @@ function ReservationSection() {
                   </div>
 
                   <div className="react-booking-selected-room">
-                    <img src={selectedRoom.formImage} alt={selectedRoom.title} />
+                    <button
+                      type="button"
+                      className="react-room-gallery-trigger react-booking-selected-room-image"
+                      aria-label={`Open ${selectedRoom.title} gallery`}
+                      onClick={() => openGallery(selectedRoom)}
+                    >
+                      <img src={selectedRoom.formImage} alt={selectedRoom.title} />
+                    </button>
                     <div>
                       <strong>{selectedRoom.title}</strong>
                       <span>{`${stayLabel} stay${searchState.roomCount > 1 ? ` | ${selectedRoomSummary?.roomCountLabel}` : ""}`}</span>
@@ -542,16 +581,27 @@ function ReservationSection() {
                   {selectedRoomGallery.length > 0 ? (
                     <div className="react-booking-policy-panel">
                       <div className="subtitle id-color mb-2">Room Photo Gallery</div>
+                      <button
+                        type="button"
+                        className="react-room-gallery-inline-button"
+                        onClick={() => openGallery(selectedRoom)}
+                      >
+                        Browse all photos
+                      </button>
                       <div className="row g-2">
                         {selectedRoomGallery.map((galleryImage, index) => (
                           <div className="col-6" key={`${selectedRoom.code}-selected-gallery-${index}`}>
-                            <a href={galleryImage.image} target="_blank" rel="noreferrer">
+                            <button
+                              type="button"
+                              className="react-room-gallery-thumb-button"
+                              onClick={() => openGallery(selectedRoom, index)}
+                            >
                               <img
                                 src={galleryImage.image}
                                 alt={galleryImage.alt ?? `${selectedRoom.title} photo ${index + 1}`}
                                 style={{ width: "100%", borderRadius: 12, objectFit: "cover", aspectRatio: "1 / 1" }}
                               />
-                            </a>
+                            </button>
                           </div>
                         ))}
                       </div>
@@ -808,6 +858,15 @@ function ReservationSection() {
           {mobileActionLabel}
         </button>
       </div>
+
+      <RoomPhotoLightbox
+        images={activeLightboxImages}
+        activeIndex={lightboxState.activeIndex}
+        isOpen={Boolean(activeLightboxRoom)}
+        onClose={() => setLightboxState({ roomTitle: null, activeIndex: 0 })}
+        onSelect={(index) => setLightboxState((current) => ({ ...current, activeIndex: index }))}
+        title={activeLightboxRoom?.title ?? "Room photos"}
+      />
     </section>
   );
 }

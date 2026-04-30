@@ -115,7 +115,7 @@ function mapRoomTypeRows(roomTypeRows, roomRows, roomTypeGalleryRows, hotel) {
       galleryImages: galleryImages.length
         ? galleryImages
         : [{ image: primaryImage, alt: `${roomTypeRow.title ?? roomTypeRow.code} photo` }].filter((item) => item.image),
-      detailsHref: "#",
+      detailsHref: "/rooms",
     };
   });
 }

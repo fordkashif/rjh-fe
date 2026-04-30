@@ -101,11 +101,33 @@ body.react-mobile-menu-open {
 }
 
 .react-reservation-hero {
-  min-height: 520px;
+  min-height: 560px;
 }
 
 .react-contact-hero {
   min-height: 500px;
+}
+
+.react-rooms-cta {
+  padding: 56px 36px;
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(248, 243, 232, 0.98)),
+    #fff;
+  box-shadow: 0 24px 60px rgba(33, 27, 19, 0.08);
+}
+
+.react-rooms-cta p {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.react-rooms-cta-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 28px;
 }
 
 .react-contact-lane {
@@ -630,11 +652,32 @@ header.react-site-header.react-site-header-secondary.smaller .react-secondary-to
   overflow: hidden;
 }
 
+.react-room-gallery-trigger {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.react-room-gallery-trigger-rounded {
+  border-radius: 100px 100px 0 0;
+  overflow: hidden;
+}
+
 .react-room-launch-image {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.react-room-gallery-trigger:hover img,
+.react-room-gallery-trigger:focus-visible img {
+  transform: scale(1.03);
 }
 
 .react-room-launch-badge {
@@ -646,6 +689,22 @@ header.react-site-header.react-site-header-secondary.smaller .react-secondary-to
   padding: 9px 14px;
   background: rgba(255, 255, 255, 0.94);
   color: #1f1f1f;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.react-room-gallery-pill {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  display: inline-flex;
+  align-items: center;
+  border: 0;
+  padding: 9px 14px;
+  background: rgba(20, 20, 20, 0.82);
+  color: #fff;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -745,6 +804,13 @@ header.react-site-header.react-site-header-secondary.smaller .react-secondary-to
 .react-room-launch-footer {
   justify-content: space-between;
   align-items: flex-end;
+}
+
+.react-room-launch-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-end;
 }
 
 .react-room-launch-note {
@@ -986,6 +1052,13 @@ header.react-site-header.react-site-header-secondary.smaller .react-secondary-to
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
 }
 
+.react-booking-search-priority {
+  position: relative;
+  z-index: 12;
+  margin-top: -220px;
+  margin-bottom: 8px;
+}
+
 .react-booking-search-grid {
   display: grid;
   grid-template-columns: minmax(280px, 1.6fr) repeat(3, minmax(140px, 1fr)) auto;
@@ -1176,13 +1249,13 @@ header.react-site-header.react-site-header-secondary.smaller .react-secondary-to
 .react-room-card-image img {
   width: 100%;
   height: 100%;
-  min-height: 220px;
   object-fit: cover;
   display: block;
 }
 
 .react-room-card-image {
   position: relative;
+  overflow: hidden;
 }
 
 .react-room-image-badge {
@@ -1222,6 +1295,181 @@ header.react-site-header.react-site-header-secondary.smaller .react-secondary-to
 .react-room-bestfor {
   color: #5f5f5f;
   font-weight: 600;
+}
+
+.react-room-gallery-inline-button {
+  display: inline-flex;
+  margin-bottom: 14px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--primary-color);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.react-room-gallery-thumb-button {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.react-booking-selected-room-image {
+  width: 88px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.react-booking-selected-room-image img {
+  width: 100%;
+  display: block;
+}
+
+.react-room-carousel-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.react-room-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.react-room-lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(10, 10, 10, 0.82);
+}
+
+.react-room-lightbox-panel {
+  position: relative;
+  z-index: 1;
+  width: min(1100px, 100%);
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  border-radius: 28px;
+  background: #fff;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.24);
+}
+
+.react-room-lightbox-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 24px 0;
+}
+
+.react-room-lightbox-header strong,
+.react-room-lightbox-kicker {
+  display: block;
+}
+
+.react-room-lightbox-kicker {
+  margin-bottom: 6px;
+  color: var(--primary-color);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.react-room-lightbox-close,
+.react-room-lightbox-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: #111;
+  color: #fff;
+}
+
+.react-room-lightbox-close {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+}
+
+.react-room-lightbox-stage {
+  position: relative;
+  padding: 20px 24px 0;
+}
+
+.react-room-lightbox-image {
+  width: 100%;
+  max-height: 68vh;
+  border-radius: 22px;
+  object-fit: cover;
+  display: block;
+}
+
+.react-room-lightbox-nav {
+  position: absolute;
+  top: calc(50% + 10px);
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+}
+
+.react-room-lightbox-nav.is-prev {
+  left: 38px;
+}
+
+.react-room-lightbox-nav.is-next {
+  right: 38px;
+}
+
+.react-room-lightbox-footer {
+  display: grid;
+  gap: 18px;
+  padding: 20px 24px 24px;
+}
+
+.react-room-lightbox-count {
+  color: #5f5f5f;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.react-room-lightbox-thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+  gap: 12px;
+}
+
+.react-room-lightbox-thumb {
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  background: transparent;
+  overflow: hidden;
+  opacity: 0.72;
+}
+
+.react-room-lightbox-thumb.is-active {
+  border-color: var(--primary-color);
+  opacity: 1;
+}
+
+.react-room-lightbox-thumb img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
 }
 
 .react-room-card h3 {
@@ -1609,6 +1857,10 @@ header.react-site-header.react-site-header-secondary.smaller .react-secondary-to
     flex-direction: column;
   }
 
+  .react-room-launch-actions {
+    justify-content: flex-start;
+  }
+
   .react-room-launch-price {
     text-align: left;
   }
@@ -1719,6 +1971,10 @@ header.react-site-header.react-site-header-secondary.smaller .react-secondary-to
     padding: 20px;
   }
 
+  .react-booking-search-priority {
+    margin-top: -72px;
+  }
+
   .react-booking-results-head,
   .react-booking-selection-banner {
     gap: 14px;
@@ -1739,8 +1995,23 @@ header.react-site-header.react-site-header-secondary.smaller .react-secondary-to
     gap: 18px;
   }
 
-  .react-room-card-image img {
-    min-height: 190px;
+  .react-room-lightbox {
+    padding: 14px;
+  }
+
+  .react-room-lightbox-header,
+  .react-room-lightbox-stage,
+  .react-room-lightbox-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .react-room-lightbox-nav.is-prev {
+    left: 22px;
+  }
+
+  .react-room-lightbox-nav.is-next {
+    right: 22px;
   }
 
   .react-room-nightly strong {
@@ -1990,14 +2261,14 @@ header.react-site-header.react-site-header-secondary.smaller .react-secondary-to
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   }
 
-  .react-mobile-menu-list a {
-    display: block;
-    padding: 15px 0;
-    color: #fff;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: 500;
-  }
+.react-mobile-menu-list a {
+  display: block;
+  padding: 15px 0;
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+}
 
   .menu_side_area {
     display: flex;
@@ -2030,5 +2301,9 @@ header.react-site-header.react-site-header-secondary.smaller .react-secondary-to
 
   .react-date-input-box {
     font-size: 20px;
+  }
+
+  .react-rooms-cta {
+    padding: 40px 22px;
   }
 }

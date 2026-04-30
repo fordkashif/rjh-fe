@@ -3,30 +3,28 @@ import { createPortal } from "react-dom";
 import { usePublicHotelContent } from "../context/PublicHotelContentContext";
 
 const roomsMenuItems = [
-  { label: "All Rooms Default", href: "/#section-rooms" },
-  { label: "All Rooms Style 2", href: "/#section-rooms" },
-  { label: "All Rooms Style 3", href: "/#section-rooms" },
-  { label: "Single Room", href: "/#section-rooms" },
-  { label: "Single Room Style 2", href: "/#section-rooms" },
+  { label: "All Accommodations", href: "/rooms" },
+  { label: "Comfort Suite", href: "/rooms" },
+  { label: "Double Double Suite", href: "/rooms" },
 ];
 
 const featuredRooms = [
   {
     label: "Best Seller",
     title: "Deluxe Room",
-    href: "/#section-rooms",
+    href: "/rooms",
     image: "/images/form/2.jpg",
   },
   {
     label: "Best Seller",
     title: "Family Suite",
-    href: "/#section-rooms",
+    href: "/rooms",
     image: "/images/form/4.jpg",
   },
   {
     label: "Featured",
     title: "Presidential Suite",
-    href: "/#section-rooms",
+    href: "/rooms",
     image: "/images/form/6.jpg",
   },
 ];
@@ -34,7 +32,7 @@ const featuredRooms = [
 const mobileNavItems = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
-  { label: "Accommodations", href: "/#section-rooms" },
+  { label: "Accommodations", href: "/rooms" },
   { label: "Reservation", href: "/reservation" },
   { label: "Contact", href: "/contact" },
 ];
@@ -254,7 +252,7 @@ function Header({ isSecondaryPage = false }) {
                     </li>
 
                     <li className="has-child">
-                      <a className="menu-item" href="/#section-rooms" onClick={closeMenu}>
+                      <a className="menu-item" href="/rooms" onClick={closeMenu}>
                         Accommodations
                       </a>
                       <ul className="mega">
