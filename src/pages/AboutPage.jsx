@@ -45,7 +45,7 @@ function AboutPage() {
 
       <section id="subheader" className="relative text-light react-subheader">
         <img
-          src="/images/background/3.webp"
+          src="/images/background/interior-page-hero.jpg"
           className="react-subheader-image"
           alt="Royale Jazz Hotel exterior"
         />
@@ -62,7 +62,7 @@ function AboutPage() {
             </div>
           </div>
         </div>
-        <div className="de-overlay" />
+        <div className="de-overlay react-page-hero-overlay" />
       </section>
 
       <section className="relative">

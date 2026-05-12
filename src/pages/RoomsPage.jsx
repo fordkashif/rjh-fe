@@ -10,7 +10,7 @@ function RoomsPage() {
 
       <section id="subheader" className="relative text-light react-subheader react-secondary-hero react-rooms-hero">
         <img
-          src="/images/background/3.webp"
+          src="/images/background/interior-page-hero.jpg"
           className="react-subheader-image"
           alt="Royale Jazz Hotel accommodations"
         />
@@ -40,7 +40,7 @@ function RoomsPage() {
             </div>
           </div>
         </div>
-        <div className="de-overlay" />
+        <div className="de-overlay react-page-hero-overlay" />
       </section>
 
       <RoomsSection />

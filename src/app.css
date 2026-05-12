@@ -58,6 +58,10 @@ body.react-mobile-menu-open {
   object-fit: cover;
 }
 
+.react-page-hero-overlay {
+  background: linear-gradient(180deg, rgba(17, 14, 11, 0.62), rgba(17, 14, 11, 0.74));
+}
+
 .react-secondary-hero {
   min-height: 520px;
 }
