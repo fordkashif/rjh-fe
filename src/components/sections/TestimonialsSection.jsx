@@ -11,13 +11,14 @@ function TestimonialsSection() {
 
   return (
     <section
-      className="relative overflow-hidden text-light section-dark react-bg-cover react-parallax"
-      style={{ backgroundImage: "url(/images/background/1.webp)" }}
+      className="relative overflow-hidden text-light section-dark react-bg-cover react-parallax react-testimonials-section"
+      style={{ backgroundImage: "url(/images/background/testimonials-hotel-exterior.jpg)" }}
     >
+      <div className="react-testimonials-overlay" />
       <div className="abs abs-centered w-30">
         <div className="box-slider-decor" />
       </div>
-      <div className="container">
+      <div className="container relative z-2">
         <div className="row">
           <div className="col-lg-8 offset-lg-2 text-center">
             <Swiper

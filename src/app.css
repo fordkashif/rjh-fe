@@ -62,6 +62,16 @@ body.react-mobile-menu-open {
   background: linear-gradient(180deg, rgba(17, 14, 11, 0.62), rgba(17, 14, 11, 0.74));
 }
 
+.react-testimonials-section {
+  position: relative;
+}
+
+.react-testimonials-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(18, 15, 12, 0.6), rgba(18, 15, 12, 0.76));
+}
+
 .react-secondary-hero {
   min-height: 520px;
 }
