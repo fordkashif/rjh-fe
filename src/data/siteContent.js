@@ -18,12 +18,12 @@ export const hotelConfig = {
 
 export const heroSlides = [
   {
-    image: "/images/slider/royale-jazz-hero-1.png",
+    image: "/images/slider/royale-jazz-hero-2-replacement.jpg",
     title: "Modern Glam In The Heart Of Kingston",
     text: "Royale Jazz Hotel blends modern glam with timeless sophistication at 58 Westminster Ave, placing guests close to the city's dining, culture, and nightlife.",
   },
   {
-    image: "/images/slider/royale-jazz-hero-2.png",
+    image: "/images/slider/royale-jazz-hero-1-replacement.jpg",
     title: "Relaxed Comfort With A Refined Edge",
     text: "From restful in-room essentials to a calm, fruit-filled setting, Royale Jazz Hotel offers a polished stay for leisure guests and busy corporate travellers alike.",
   },
