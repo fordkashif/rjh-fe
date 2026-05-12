@@ -2,33 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { usePublicHotelContent } from "../context/PublicHotelContentContext";
 
-const roomsMenuItems = [
-  { label: "All Accommodations", href: "/rooms" },
-  { label: "Comfort Suite", href: "/rooms" },
-  { label: "Double Double Suite", href: "/rooms" },
-];
-
-const featuredRooms = [
-  {
-    label: "Best Seller",
-    title: "Deluxe Room",
-    href: "/rooms",
-    image: "/images/form/2.jpg",
-  },
-  {
-    label: "Best Seller",
-    title: "Family Suite",
-    href: "/rooms",
-    image: "/images/form/4.jpg",
-  },
-  {
-    label: "Featured",
-    title: "Presidential Suite",
-    href: "/rooms",
-    image: "/images/form/6.jpg",
-  },
-];
-
 const mobileNavItems = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
@@ -38,7 +11,7 @@ const mobileNavItems = [
 ];
 
 function Header({ isSecondaryPage = false }) {
-  const { footerContent, hotel } = usePublicHotelContent();
+  const { footerContent, hotel, rooms } = usePublicHotelContent();
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerState, setHeaderState] = useState("top");
   const [isMobileMenu, setIsMobileMenu] = useState(() =>
@@ -178,6 +151,14 @@ function Header({ isSecondaryPage = false }) {
         )
       : null;
 
+  const roomsMenuItems = [
+    { label: "All Accommodations", href: "/rooms" },
+    ...rooms.map((room) => ({
+      label: room.title,
+      href: "/rooms",
+    })),
+  ];
+
   return (
     <>
       <header ref={headerRef} className={headerClassName}>
@@ -273,11 +254,11 @@ function Header({ isSecondaryPage = false }) {
                                   </ul>
                                 </div>
 
-                                {featuredRooms.map((room) => (
+                                {rooms.map((room) => (
                                   <div className="col-lg-3 text-center" key={room.title}>
                                     <div className="relative hover text-center overflow-hidden soft-shadow rounded-5px">
-                                      <a href={room.href} onClick={closeMenu}>
-                                        <div className="d-label">{room.label}</div>
+                                      <a href="/rooms" onClick={closeMenu}>
+                                        <div className="d-label">{room.rateLabel ?? "Room"}</div>
                                         <img
                                           src={room.image}
                                           className="w-100 relative hover-scale-1-1"
