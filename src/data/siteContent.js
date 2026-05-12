@@ -92,8 +92,8 @@ export const rooms = [
     price: "$140",
     guests: "3 Guests",
     size: "Oversized Suite",
-    image: "/images/room/2.webp",
-    formImage: "/images/form/2.jpg",
+    image: "/images/room/double-double-suite/bedroom.jpg",
+    formImage: "/images/room/double-double-suite/bedroom.jpg",
     description: "A larger suite option for up to three guests, offering the same oversized comfort with workspace, seating, and in-room convenience.",
     bed: "Double Double Layout",
     amenities: ["Free WiFi", "Microwave", "Refrigerator"],
@@ -102,8 +102,10 @@ export const rooms = [
     badge: "3 Available",
     bestFor: "Small groups and longer stays",
     galleryImages: [
-      { image: "/images/room/2.webp", alt: "Double Double Suite main photo" },
-      { image: "/images/form/2.jpg", alt: "Double Double Suite alternate photo" },
+      { image: "/images/room/double-double-suite/bedroom.jpg", alt: "Double Double Suite bedroom" },
+      { image: "/images/room/double-double-suite/bathroom.jpg", alt: "Double Double Suite bathroom" },
+      { image: "/images/room/double-double-suite/sink-detail.jpg", alt: "Double Double Suite sink detail" },
+      { image: "/images/room/double-double-suite/workspace.jpg", alt: "Double Double Suite workspace" },
     ],
   },
 ].map((room) => ({
