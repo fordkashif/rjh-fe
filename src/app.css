@@ -2000,19 +2000,6 @@ header.react-site-header #mainmenu li ul.mega .sb-menu li a:hover {
 }
 
 @media (max-width: 767px) {
-  .hero-swiper .swiper-slide,
-  .hero-swiper .swiper-inner {
-    min-height: 82svh;
-  }
-
-  .hero-swiper .swiper-inner {
-    background-position: center 24%;
-  }
-
-  .react-subheader-image {
-    object-position: center 24%;
-  }
-
   .react-reservation-bar-layout {
     grid-template-columns: 1fr;
     gap: 18px;
