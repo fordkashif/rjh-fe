@@ -1,5 +1,14 @@
 import { isSupabaseConfigured, supabase } from "./supabaseClient";
 
+const featurePhotoByTitle = {
+  "Swimming Pool": "/images/features/swimming-pool.jpg",
+  "Fitness Center": "/images/features/fitness-center.jpg",
+  "Continental Breakfast": "/images/gallery-mix/menu.jpg",
+  "Jetted Tub Jacuzzi": "/images/features/jacuzzi.jpg",
+  "Game Room": "/images/features/game-room.jpg",
+  "Nearby Dining": "/images/nearby/marketplace.jpg",
+};
+
 function requireConfiguredPublicClient() {
   if (!isSupabaseConfigured || !supabase) {
     throw new Error("Hotel details are temporarily unavailable. Please try again shortly.");
@@ -133,6 +142,7 @@ function mapFeatureItems(featureRows) {
     title: featureRow.title,
     text: featureRow.text,
     icon: featureRow.icon_url,
+    image: featurePhotoByTitle[featureRow.title] ?? "/images/demo/facilities.webp",
   }));
 }
 

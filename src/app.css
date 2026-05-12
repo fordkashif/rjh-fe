@@ -158,6 +158,37 @@ body.react-mobile-menu-open {
   background: var(--primary-color) !important;
 }
 
+.react-feature-photo-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(21, 18, 14, 0.06);
+}
+
+.react-feature-photo-card-image {
+  min-height: 220px;
+  aspect-ratio: 16 / 10;
+  background-position: center;
+}
+
+.react-feature-photo-card-body {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 24px 26px 28px;
+}
+
+.react-feature-photo-card-body h4 {
+  margin-bottom: 0;
+}
+
+.react-feature-photo-card-body p {
+  color: #5f5f5f;
+}
+
 .react-contact-lane {
   height: 100%;
   padding: 26px;
@@ -1999,6 +2030,14 @@ header.react-site-header.react-site-header-secondary.smaller .react-secondary-to
 
   .react-contact-form-footer {
     align-items: stretch;
+  }
+
+  .react-feature-photo-card {
+    grid-template-columns: 1fr;
+  }
+
+  .react-feature-photo-card-image {
+    min-height: 180px;
   }
 
   .react-booking-search-grid {

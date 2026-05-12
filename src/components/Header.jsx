@@ -189,13 +189,6 @@ function Header({ isSecondaryPage = false }) {
                       </div>
                     </div>
 
-                    <div className="social-icons">
-                      {footerContent.socials.map((social) => (
-                        <a href="#" key={social} aria-label={social}>
-                          <i className={`fa-brands fa-${social} fa-lg`} />
-                        </a>
-                      ))}
-                    </div>
                   </div>
                 </div>
               </div>

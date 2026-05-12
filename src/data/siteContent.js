@@ -29,6 +29,15 @@ export const heroSlides = [
   },
 ];
 
+const featurePhotoByTitle = {
+  "Swimming Pool": "/images/features/swimming-pool.jpg",
+  "Fitness Center": "/images/features/fitness-center.jpg",
+  "Continental Breakfast": "/images/gallery-mix/menu.jpg",
+  "Jetted Tub Jacuzzi": "/images/features/jacuzzi.jpg",
+  "Game Room": "/images/features/game-room.jpg",
+  "Nearby Dining": "/images/nearby/marketplace.jpg",
+};
+
 export const features = [
   ["Swimming Pool", "/images/svg/swimming-pool-svgrepo-com.svg"],
   ["Fitness Center", "/images/svg/fitness-gym-svgrepo-com.svg"],
@@ -39,6 +48,7 @@ export const features = [
 ].map(([title, icon]) => ({
   title,
   icon,
+  image: featurePhotoByTitle[title] ?? "/images/demo/facilities.webp",
   text:
     {
       "Swimming Pool": "Unwind in a lush, relaxing pool setting designed for serenity and rejuvenation.",

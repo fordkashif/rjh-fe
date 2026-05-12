@@ -47,11 +47,13 @@ function AboutSection() {
         <div className="row g-4 relative z-2">
           {features.map((feature) => (
             <div className="col-lg-4 col-md-6" key={feature.title}>
-              <div className="relative p-4 bg-white border-grey">
-                <span className="abs top-= w-70px p-3 rounded-up-100 bg-color d-block">
-                  <img src={feature.icon} className="w-100" alt="" />
-                </span>
-                <div className="pl-90">
+              <div className="react-feature-photo-card">
+                <div
+                  className="react-feature-photo-card-image react-bg-cover"
+                  style={{ backgroundImage: `url(${feature.image ?? feature.icon})` }}
+                  aria-hidden="true"
+                />
+                <div className="react-feature-photo-card-body">
                   <h4>{feature.title}</h4>
                   <p className="mb-0">{feature.text}</p>
                 </div>

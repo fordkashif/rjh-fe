@@ -17,14 +17,6 @@ function Footer() {
 
               <div>
                 <img src="/images/royale-jazz-logo.png" className="w-200px react-footer-logo" alt={hotel.name} />
-                <br />
-                <div className="social-icons mb-sm-30 mt-4">
-                  {footerContent.socials.map((social) => (
-                    <a href="#" key={social} aria-label={social}>
-                      <i className={`fa-brands fa-${social}`} />
-                    </a>
-                  ))}
-                </div>
               </div>
 
               <div>
