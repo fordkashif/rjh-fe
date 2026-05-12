@@ -22,7 +22,7 @@ function VideoSection() {
         <div className="react-home-cta-panel">
           <div
             className="react-home-cta-image react-bg-cover"
-            style={{ backgroundImage: `url(${hotel.homeCtaImageUrl ?? "/images/slider/royale-jazz-hero-2.png"})` }}
+            style={{ backgroundImage: `url(${hotel.homeCtaImageUrl ?? "/images/slider/royale-jazz-hero-1-replacement.jpg"})` }}
           />
 
           <div className="react-home-cta-content">
