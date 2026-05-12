@@ -144,17 +144,18 @@ body.react-mobile-menu-open {
   margin-top: 28px;
 }
 
-.react-rooms-cta-actions .btn-line {
-  color: #1f1f1f;
-  border: 1px solid rgba(31, 31, 31, 0.2);
-  background: rgba(255, 255, 255, 0.72);
+.react-rooms-cta .react-rooms-cta-actions a.btn-line,
+.react-rooms-cta .react-rooms-cta-actions a.btn-line:hover {
+  color: #1f1f1f !important;
+  border: 1px solid rgba(31, 31, 31, 0.2) !important;
+  background: rgba(255, 255, 255, 0.9) !important;
 }
 
-.react-rooms-cta-actions .btn-line:hover,
-.react-rooms-cta-actions .btn-line:focus-visible {
-  color: #fff;
-  border-color: var(--primary-color);
-  background: var(--primary-color);
+.react-rooms-cta .react-rooms-cta-actions a.btn-line:hover,
+.react-rooms-cta .react-rooms-cta-actions a.btn-line:focus-visible {
+  color: #fff !important;
+  border-color: var(--primary-color) !important;
+  background: var(--primary-color) !important;
 }
 
 .react-contact-lane {
