@@ -4,6 +4,7 @@ import { usePublicHotelContent } from "../../context/PublicHotelContentContext";
 
 function AboutSection() {
   const { features, hotel } = usePublicHotelContent();
+
   return (
     <section id="section-about" className="relative lines-deco">
       <div className="container">
