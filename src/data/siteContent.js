@@ -83,7 +83,7 @@ export const rooms = [
     guests: "2 Guests",
     size: "Oversized Suite",
     image: "/images/room/comfort-suite-homepage.jpg",
-    formImage: "/images/form/1.jpg",
+    formImage: "/images/slider/royale-jazz-hero-1-replacement.jpg",
     description: "A spacious suite designed for comfort, with a dedicated workspace, sofa seating, and the essentials for a polished Kingston stay.",
     bed: "Suite Layout",
     amenities: ["Free WiFi", "Microwave", "Refrigerator"],
@@ -93,7 +93,7 @@ export const rooms = [
     bestFor: "Couples and business travel",
     galleryImages: [
       { image: "/images/room/comfort-suite-homepage.jpg", alt: "Comfort Suite main photo" },
-      { image: "/images/form/1.jpg", alt: "Comfort Suite alternate photo" },
+      { image: "/images/slider/royale-jazz-hero-1-replacement.jpg", alt: "Comfort Suite alternate photo" },
     ],
   },
   {
