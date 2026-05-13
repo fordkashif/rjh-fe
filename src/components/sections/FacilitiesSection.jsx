@@ -14,7 +14,7 @@ function FacilitiesSection() {
             <div className="subtitle id-color mb-3">Nearby Places</div>
             <h2>What Is Close To Royale Jazz Hotel</h2>
             <p className="react-nearby-intro mb-0">
-              {hotel.nearbyIntro ?? "Stay close to Kingston culture, shopping, dining, nightlife, and everyday essentials from 58 Westminster Ave."}
+              {hotel.nearbyIntro ?? "Stay close to Kingston culture, shopping, dining, nightlife, and everyday essentials from 58 Westiminister Road."}
             </p>
           </div>
 
@@ -44,7 +44,7 @@ function FacilitiesSection() {
                         <span className="react-nearby-card-distance">{item.value}</span>
                         <span className="react-nearby-card-pin">
                           <MapPin size={14} strokeWidth={2} />
-                          Westminster Ave
+                          Westiminister Road
                         </span>
                       </div>
                       <h3>{item.title}</h3>

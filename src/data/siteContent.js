@@ -20,7 +20,7 @@ export const heroSlides = [
   {
     image: "/images/slider/royale-jazz-hero-2-replacement.jpg",
     title: "Modern Glam In The Heart Of Kingston",
-    text: "Royale Jazz Hotel blends modern glam with timeless sophistication at 58 Westminster Ave, placing guests close to the city's dining, culture, and nightlife.",
+    text: "Royale Jazz Hotel blends modern glam with timeless sophistication at 58 Westiminister Road, placing guests close to the city's dining, culture, and nightlife.",
   },
   {
     image: "/images/slider/royale-jazz-hero-1-replacement.jpg",
@@ -183,7 +183,7 @@ export const galleryImages = Array.from({ length: 8 }, (_, index) => ({
 }));
 
 export const footerContent = {
-  address: ["58 Westminster Ave", "Kingston, Jamaica"],
+  address: ["58 Westiminister Road", "Kingston, Jamaica"],
   phone: "+1-876-589-2424",
   email: "royalejazzhotel@gmail.com",
   socials: [

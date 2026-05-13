@@ -66,7 +66,7 @@ function ContactPage() {
         eyebrow: "Visit Us",
         title: "Hotel Address",
         detail: footerContent.address.join(", "),
-        href: hotel.mapDirectionsUrl ?? "https://maps.google.com/?q=58+Westminster+Ave+Kingston+Jamaica",
+        href: hotel.mapDirectionsUrl ?? "https://maps.google.com/?q=58+Westiminister+Road+Kingston+Jamaica",
         note: "Open directions in your preferred maps app before arrival.",
       },
     ],
@@ -381,7 +381,7 @@ function ContactPage() {
               <div className="react-contact-map-wrap">
                 <iframe
                   title={`${hotel.name} location`}
-                  src={hotel.mapEmbedUrl ?? "https://www.google.com/maps?q=58+Westminster+Ave+Kingston+Jamaica&output=embed"}
+                  src={hotel.mapEmbedUrl ?? "https://www.google.com/maps?q=58+Westiminister+Road+Kingston+Jamaica&output=embed"}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 />
@@ -406,7 +406,7 @@ function ContactPage() {
                   <div className="react-contact-location-item">
                     <span>Directions</span>
                     <strong>
-                      <a href={hotel.mapDirectionsUrl ?? "https://maps.google.com/?q=58+Westminster+Ave+Kingston+Jamaica"} target="_blank" rel="noreferrer">
+                      <a href={hotel.mapDirectionsUrl ?? "https://maps.google.com/?q=58+Westiminister+Road+Kingston+Jamaica"} target="_blank" rel="noreferrer">
                         Open in Google Maps
                       </a>
                     </strong>

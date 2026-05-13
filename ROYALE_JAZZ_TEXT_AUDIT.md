@@ -2,7 +2,7 @@
 
 This document maps the current website text to the information provided in:
 
-- `/Users/abigailsubarney/Downloads/58 Westminster Ave, Royale Jazz Hotel (2) (1).pdf`
+- `/Users/abigailsubarney/Downloads/58 Westiminister Road, Royale Jazz Hotel (2) (1).pdf`
 
 ## 1. Confirmed Source Content From The PDF
 
@@ -11,7 +11,7 @@ These are the details we can safely use right now.
 ### Brand / positioning
 
 - Hotel name: `Royale Jazz Hotel`
-- Address reference in document title: `58 Westminster Ave`
+- Address reference in document title: `58 Westiminister Road`
 - Brand tone: modern glam, timeless, refined, sophisticated
 - Core description:
   `Royale Jazz Hotel exudes modern glam, infused with a hint of timeless, refined, unpredictable sophistication.`
@@ -123,7 +123,7 @@ Main sections inside that file:
   [src/pages/ContactPage.jsx](/Users/abigailsubarney/Downloads/Almaris/Almaris%20HTML/src/pages/ContactPage.jsx:43)
   and
   [src/pages/ContactPage.jsx](/Users/abigailsubarney/Downloads/Almaris/Almaris%20HTML/src/pages/ContactPage.jsx:328)
-- Arrival/location paragraph should be rewritten around `58 Westminster Ave` and the nearby Kingston destinations listed in the PDF.
+- Arrival/location paragraph should be rewritten around `58 Westiminister Road` and the nearby Kingston destinations listed in the PDF.
 - Contact methods depend on `footerContent`, so real phone/email/social links are still needed.
 
 ## Reservation page
@@ -155,7 +155,7 @@ Main sections inside that file:
 These can be updated now using the PDF alone:
 
 - Hotel name: replace `Almaris` with `Royale Jazz Hotel`
-- Address reference: replace fake Brooklyn address with `58 Westminster Ave`
+- Address reference: replace fake Brooklyn address with `58 Westiminister Road`
 - Homepage hero/body positioning copy
 - About intro / hotel overview copy
 - Amenity list and amenity descriptions:
@@ -168,7 +168,7 @@ These details are not in the PDF and should be confirmed before we fully rewrite
 
 ### Contact details
 
-- Full mailing address line beyond `58 Westminster Ave`
+- Full mailing address line beyond `58 Westiminister Road`
 - Parish / city / postal details
 - Primary phone number
 - Email address
