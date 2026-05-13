@@ -88,7 +88,7 @@ export const rooms = [
     bed: "Suite Layout",
     amenities: ["Free WiFi", "Microwave", "Refrigerator"],
     rateLabel: "Standard Rate",
-    rateNote: "USD 140 per night. Pool-view and garden-view options may be available.",
+    rateNote: "USD 140 per night.",
     badge: "13 Available",
     bestFor: "Couples and business travel",
     galleryImages: [
@@ -108,7 +108,7 @@ export const rooms = [
     bed: "Double Double Layout",
     amenities: ["Free WiFi", "Microwave", "Refrigerator"],
     rateLabel: "Standard Rate",
-    rateNote: "USD 140 per night. Pool-view and garden-view options may be available.",
+    rateNote: "USD 140 per night.",
     badge: "3 Available",
     bestFor: "Small groups and longer stays",
     galleryImages: [

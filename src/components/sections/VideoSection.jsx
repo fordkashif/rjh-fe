@@ -36,7 +36,6 @@ function VideoSection() {
               {(hotel.homeCtaPoints?.length ? hotel.homeCtaPoints : [
                 roomTitles.join(" and "),
                 lowestRate ? `${hotel.currency ?? "USD"} ${lowestRate} per night` : null,
-                "Pool and garden view options",
               ]).filter(Boolean).map((point) => (
                 <span key={point}>{point}</span>
               ))}

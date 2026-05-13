@@ -82,6 +82,13 @@ function RoomPhotoLightbox({
             src={activeImage.image}
             alt={activeImage.alt ?? `${title} photo ${activeIndex + 1}`}
             className="react-room-lightbox-image"
+            style={{
+              width: "auto",
+              maxWidth: "100%",
+              maxHeight: "68vh",
+              height: "auto",
+              objectFit: "contain",
+            }}
           />
 
           {images.length > 1 ? (
