@@ -20,6 +20,10 @@ const ABOUT_PAGE_GALLERY_IMAGES = [
     alt: "Royale Jazz Hotel hallway",
   },
   {
+    image: "/images/misc/royale-jazz-staircase-gallery.jpg",
+    alt: "Royale Jazz Hotel staircase",
+  },
+  {
     image: "/images/features/swimming-pool.jpg",
     alt: "Royale Jazz Hotel swimming pool",
   },
