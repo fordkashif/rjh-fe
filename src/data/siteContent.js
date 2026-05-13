@@ -185,6 +185,7 @@ export const galleryImages = Array.from({ length: 8 }, (_, index) => ({
 export const footerContent = {
   address: ["58 Westiminister Road", "Kingston, Jamaica"],
   phone: "876-672-2462",
+  phones: ["876-672-2462", "876-589-2424"],
   email: "royalejazzhotel@gmail.com",
   socials: [
     "facebook-f",

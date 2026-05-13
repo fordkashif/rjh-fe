@@ -24,7 +24,24 @@ function formatPrice(amount, currency = "USD") {
   return `${symbol}${Number(amount)}`;
 }
 
+function parsePhoneNumbers(phoneValue) {
+  if (Array.isArray(phoneValue)) {
+    return phoneValue.map((value) => String(value).trim()).filter(Boolean);
+  }
+
+  if (typeof phoneValue !== "string") {
+    return [];
+  }
+
+  return phoneValue
+    .split("/")
+    .map((value) => value.trim())
+    .filter(Boolean);
+}
+
 function mapHotelRow(hotelRow) {
+  const phones = parsePhoneNumbers(hotelRow.contact_phone);
+
   return {
     id: hotelRow.id,
     organizationId: hotelRow.organization_id,
@@ -34,7 +51,8 @@ function mapHotelRow(hotelRow) {
     timezone: hotelRow.timezone ?? "",
     currency: hotelRow.currency ?? "USD",
     address: [hotelRow.address_line_1, hotelRow.address_line_2].filter(Boolean),
-    phone: hotelRow.contact_phone ?? "",
+    phone: phones[0] ?? "",
+    phones,
     email: hotelRow.contact_email ?? "",
     socials: Array.isArray(hotelRow.social_handles) ? hotelRow.social_handles : [],
     aboutHeading: hotelRow.about_heading ?? "",
@@ -239,6 +257,7 @@ export async function fetchPublicHotelContent(hotelId) {
     footerContent: {
       address: hotel.address,
       phone: hotel.phone,
+      phones: hotel.phones,
       email: hotel.email,
       socials: hotel.socials,
     },

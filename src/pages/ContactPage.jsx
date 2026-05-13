@@ -43,14 +43,22 @@ function ContactPage() {
   const [submitState, setSubmitState] = useState({ status: "idle", error: "" });
 
   const locationLabel = useMemo(() => footerContent.address.join(", "), [footerContent.address]);
+  const phoneNumbers = useMemo(
+    () => (footerContent.phones?.length ? footerContent.phones : [footerContent.phone].filter(Boolean)),
+    [footerContent.phone, footerContent.phones],
+  );
+  const phoneSummary = useMemo(
+    () => phoneNumbers.map((phoneNumber, index) => `${index === 0 ? "Landline" : "Mobile"}: ${phoneNumber}`).join(" / "),
+    [phoneNumbers],
+  );
   const supportCards = useMemo(
     () => [
       {
         icon: Phone,
         eyebrow: "Call The Hotel",
         title: "Front Desk & Reservations",
-        detail: footerContent.phone,
-        href: `tel:${footerContent.phone.replace(/\s+/g, "")}`,
+        detail: phoneSummary,
+        href: `tel:${phoneNumbers[0]?.replace(/\D+/g, "") ?? ""}`,
         note: "Best for same-day questions, arrival timing, and booking support.",
       },
       {
@@ -70,7 +78,7 @@ function ContactPage() {
         note: "Open directions in your preferred maps app before arrival.",
       },
     ],
-    [footerContent.address, footerContent.email, footerContent.phone, hotel.mapDirectionsUrl],
+    [footerContent.address, footerContent.email, hotel.mapDirectionsUrl, phoneNumbers, phoneSummary],
   );
 
   const updateField = (field, value) => {
@@ -260,10 +268,12 @@ function ContactPage() {
                       </div>
                     </div>
                     <div className="react-booking-contact-row mb-0">
-                      <a href={`tel:${footerContent.phone.replace(/\s+/g, "")}`}>
-                        <Phone size={15} strokeWidth={2} />
-                        {footerContent.phone}
-                      </a>
+                      {phoneNumbers.map((phoneNumber, index) => (
+                        <a href={`tel:${phoneNumber.replace(/\D+/g, "")}`} key={phoneNumber}>
+                          <Phone size={15} strokeWidth={2} />
+                          {index === 0 ? `Landline: ${phoneNumber}` : `Mobile: ${phoneNumber}`}
+                        </a>
+                      ))}
                       <a href={`mailto:${footerContent.email}`}>
                         <Mail size={15} strokeWidth={2} />
                         {footerContent.email}

@@ -67,6 +67,9 @@ function ReservationSection() {
     roomTitle: null,
     activeIndex: 0,
   });
+  const phoneNumbers = footerContent.phones?.length ? footerContent.phones : [footerContent.phone].filter(Boolean);
+  const primaryPhoneNumber = phoneNumbers[0] ?? "";
+  const phoneSummary = phoneNumbers.join(" / ");
 
   const nights = useMemo(() => getBookingNights(searchState.range), [searchState.range]);
   const stayLabel = getStayLabel(nights);
@@ -421,9 +424,9 @@ function ReservationSection() {
                     Try adjusting your dates or guest count, or contact the hotel team directly for help finding the best option.
                   </p>
                   <div className="react-booking-contact-row">
-                    <a href={`tel:${footerContent.phone.replace(/\s+/g, "")}`}>
+                    <a href={`tel:${primaryPhoneNumber.replace(/\D+/g, "")}`}>
                       <Phone size={15} strokeWidth={2} />
-                      {footerContent.phone}
+                      {phoneSummary}
                     </a>
                     <a href={`mailto:${footerContent.email}`}>
                       <Mail size={15} strokeWidth={2} />
@@ -650,7 +653,7 @@ function ReservationSection() {
                     </div>
                     <div className="react-booking-trust-item">
                       <Phone size={16} strokeWidth={2} />
-                      <span>{`Need help booking? Call ${footerContent.phone}`}</span>
+                      <span>{`Need help booking? Call ${phoneSummary}`}</span>
                     </div>
                   </div>
 
@@ -721,7 +724,7 @@ function ReservationSection() {
                         >
                           Edit Guest Details
                         </button>
-                        <a className="btn-main btn-line" href={`tel:${footerContent.phone.replace(/\s+/g, "")}`}>
+                        <a className="btn-main btn-line" href={`tel:${primaryPhoneNumber.replace(/\D+/g, "")}`}>
                           Call Hotel
                         </a>
                       </div>
@@ -787,9 +790,9 @@ function ReservationSection() {
                         ) : null}
 
                         <div className="react-booking-contact-row">
-                          <a href={`tel:${footerContent.phone.replace(/\s+/g, "")}`}>
+                          <a href={`tel:${primaryPhoneNumber.replace(/\D+/g, "")}`}>
                             <Phone size={15} strokeWidth={2} />
-                            {footerContent.phone}
+                            {phoneSummary}
                           </a>
                           <a href={`mailto:${footerContent.email}`}>
                             <Mail size={15} strokeWidth={2} />
@@ -816,9 +819,9 @@ function ReservationSection() {
                       : "Choose your preferred stay to continue with guest details."}
                   </p>
                   <div className="react-booking-contact-row mb-0">
-                    <a href={`tel:${footerContent.phone.replace(/\s+/g, "")}`}>
+                    <a href={`tel:${primaryPhoneNumber.replace(/\D+/g, "")}`}>
                       <Phone size={15} strokeWidth={2} />
-                      {footerContent.phone}
+                      {phoneSummary}
                     </a>
                     <a href={`mailto:${footerContent.email}`}>
                       <Mail size={15} strokeWidth={2} />

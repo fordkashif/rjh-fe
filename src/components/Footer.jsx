@@ -4,6 +4,8 @@ import { Mail, Phone } from "lucide-react";
 
 function Footer() {
   const { footerContent, hotel } = usePublicHotelContent();
+  const phoneNumbers = footerContent.phones?.length ? footerContent.phones : [footerContent.phone].filter(Boolean);
+
   return (
     <footer id="footer" className="text-light section-dark">
       <div className="container">
@@ -23,10 +25,14 @@ function Footer() {
 
               <div>
                 <h3 className="fs-20">Contact Us</h3>
-                <div className="react-footer-contact-line">
-                  <Phone size={15} strokeWidth={2} />
-                  <a href={`tel:${footerContent.phone.replace(/\s+/g, "")}`}>{footerContent.phone}</a>
-                </div>
+                {phoneNumbers.map((phoneNumber, index) => (
+                  <div className="react-footer-contact-line" key={phoneNumber}>
+                    <Phone size={15} strokeWidth={2} />
+                    <a href={`tel:${phoneNumber.replace(/\D+/g, "")}`}>
+                      {index === 0 ? `Landline: ${phoneNumber}` : `Mobile: ${phoneNumber}`}
+                    </a>
+                  </div>
+                ))}
                 <div className="react-footer-contact-line">
                   <Mail size={15} strokeWidth={2} />
                   <a href={`mailto:${footerContent.email}`}>{footerContent.email}</a>

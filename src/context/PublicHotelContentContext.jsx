@@ -13,6 +13,7 @@ const EMPTY_HOTEL = {
   currency: "USD",
   address: [],
   phone: "",
+  phones: [],
   email: "",
   socials: [],
   aboutHeading: "",
@@ -38,6 +39,7 @@ const EMPTY_HOTEL = {
 const EMPTY_FOOTER = {
   address: [],
   phone: "",
+  phones: [],
   email: "",
   socials: [],
 };

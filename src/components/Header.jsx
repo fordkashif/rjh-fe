@@ -158,6 +158,7 @@ function Header({ isSecondaryPage = false }) {
       href: "/rooms",
     })),
   ];
+  const phoneNumbers = footerContent.phones?.length ? footerContent.phones : [footerContent.phone].filter(Boolean);
 
   return (
     <>
@@ -176,9 +177,9 @@ function Header({ isSecondaryPage = false }) {
                         </a>
                       </div>
                       <div className="topbar-widget">
-                        <a href={`tel:${footerContent.phone.replace(/\s+/g, "")}`}>
+                        <a href={`tel:${phoneNumbers[0].replace(/\D+/g, "")}`}>
                           <i className="icofont-phone" />
-                          {footerContent.phone}
+                          {phoneNumbers.join(" / ")}
                         </a>
                       </div>
                       <div className="topbar-widget">
