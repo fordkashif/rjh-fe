@@ -15,7 +15,6 @@ function HomePage() {
       <ReservationBar />
       <AboutSection />
       <RoomsSection />
-      <FacilitiesSection />
       <PropertyGallerySection
         sectionClassName="relative react-home-gallery-section"
         subtitle="Photo Gallery"
@@ -23,6 +22,7 @@ function HomePage() {
         text="Walk through the atmosphere before you book, from arrival moments and shared spaces to the details that shape the stay."
         variant="home"
       />
+      <FacilitiesSection />
       <VideoSection />
       <TestimonialsSection />
     </main>
