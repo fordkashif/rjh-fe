@@ -214,9 +214,67 @@ body.react-mobile-menu-open {
   box-shadow: 0 22px 46px rgba(21, 18, 14, 0.06);
 }
 
+.react-home-gallery-section {
+  position: relative;
+  padding: 110px 0 100px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top left, rgba(188, 154, 112, 0.16), transparent 32%),
+    radial-gradient(circle at right center, rgba(231, 220, 197, 0.7), transparent 28%),
+    linear-gradient(180deg, #f6f1e8 0%, #fbf8f3 48%, #ffffff 100%);
+}
+
+.react-home-gallery-section::before,
+.react-home-gallery-section::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border-radius: 999px;
+  opacity: 0.7;
+}
+
+.react-home-gallery-section::before {
+  top: -120px;
+  left: -80px;
+  width: 320px;
+  height: 320px;
+  background: rgba(255, 255, 255, 0.42);
+  filter: blur(10px);
+}
+
+.react-home-gallery-section::after {
+  right: -120px;
+  bottom: -140px;
+  width: 380px;
+  height: 380px;
+  background: rgba(188, 154, 112, 0.12);
+  filter: blur(12px);
+}
+
+.react-home-gallery-wrap {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
 .react-about-gallery-head {
   max-width: 680px;
   margin: 0 auto 28px;
+}
+
+.react-home-gallery-head {
+  max-width: 760px;
+  margin: 0 0 34px;
+  text-align: left;
+}
+
+.react-home-gallery-head h2 {
+  max-width: 680px;
+}
+
+.react-home-gallery-head p {
+  max-width: 620px;
 }
 
 .react-about-gallery-head p {
@@ -228,6 +286,10 @@ body.react-mobile-menu-open {
   grid-template-columns: 1.15fr 0.85fr 0.85fr;
   grid-auto-rows: 220px;
   gap: 16px;
+}
+
+.react-home-gallery-section .react-about-gallery-grid {
+  gap: 18px;
 }
 
 .react-about-gallery-tile {
@@ -258,6 +320,10 @@ body.react-mobile-menu-open {
   background: linear-gradient(180deg, rgba(16, 12, 8, 0.02), rgba(16, 12, 8, 0.18));
   opacity: 0;
   transition: opacity 0.25s ease;
+}
+
+.react-home-gallery-section .react-about-gallery-tile {
+  box-shadow: 0 18px 38px rgba(30, 22, 14, 0.08);
 }
 
 .react-about-gallery-tile:hover::after,
@@ -2174,6 +2240,14 @@ header.react-site-header #mainmenu li ul.mega .sb-menu li a:hover {
 
   .react-about-gallery-wrap {
     padding: 28px 22px 22px;
+  }
+
+  .react-home-gallery-section {
+    padding: 82px 0 78px;
+  }
+
+  .react-home-gallery-wrap {
+    padding: 0;
   }
 
   .react-about-gallery-grid {
