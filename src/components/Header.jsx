@@ -159,6 +159,7 @@ function Header({ isSecondaryPage = false }) {
     })),
   ];
   const phoneNumbers = footerContent.phones?.length ? footerContent.phones : [footerContent.phone].filter(Boolean);
+  const primaryPhoneNumber = phoneNumbers[0] ?? "";
 
   return (
     <>
@@ -177,9 +178,9 @@ function Header({ isSecondaryPage = false }) {
                         </a>
                       </div>
                       <div className="topbar-widget">
-                        <a href={`tel:${phoneNumbers[0].replace(/\D+/g, "")}`}>
+                        <a href={primaryPhoneNumber ? `tel:${primaryPhoneNumber.replace(/\D+/g, "")}` : "#"}>
                           <i className="icofont-phone" />
-                          {phoneNumbers.join(" / ")}
+                          {phoneNumbers.length ? phoneNumbers.join(" / ") : "Phone coming soon"}
                         </a>
                       </div>
                       <div className="topbar-widget">
