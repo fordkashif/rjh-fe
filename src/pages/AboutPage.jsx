@@ -161,10 +161,10 @@ function AboutPage() {
                   onClick={() => openGalleryAtIndex(index)}
                   aria-label={`Open gallery photo ${index + 1}`}
                 >
-                  <span
-                    className="react-about-gallery-tile-image react-bg-cover"
-                    style={{ backgroundImage: `url(${image.image})` }}
-                    aria-hidden="true"
+                  <img
+                    src={image.image}
+                    alt={image.alt}
+                    className="react-about-gallery-tile-image"
                   />
                 </button>
               ))}
