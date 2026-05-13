@@ -613,16 +613,13 @@ header.react-site-header #mainmenu li ul.mega .sb-menu li a:hover {
 
 .nearby-carousel .swiper-slide {
   height: auto;
-  opacity: 0.56;
-  transform: scale(0.94);
   transition:
-    opacity 0.35s ease,
-    transform 0.35s ease;
+    box-shadow 0.35s ease;
 }
 
 .nearby-carousel .swiper-slide-active {
   opacity: 1;
-  transform: scale(1);
+  transform: none;
 }
 
 .nearby-carousel .swiper-slide-active .react-nearby-card {
@@ -646,13 +643,14 @@ header.react-site-header #mainmenu li ul.mega .sb-menu li a:hover {
   width: 52px;
   height: 52px;
   margin-top: -26px;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  background: rgba(18, 18, 18, 0.42);
-  backdrop-filter: blur(8px);
+  border: none;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none;
   color: #fff;
+  z-index: 6;
   transition:
-    background 0.25s ease,
-    border-color 0.25s ease,
+    color 0.25s ease,
     transform 0.25s ease;
 }
 
@@ -664,17 +662,22 @@ header.react-site-header #mainmenu li ul.mega .sb-menu li a:hover {
   right: 18px;
 }
 
+.nearby-carousel .swiper-button-prev::before,
+.nearby-carousel .swiper-button-next::before {
+  display: none !important;
+}
+
 .nearby-carousel .swiper-button-prev:hover,
 .nearby-carousel .swiper-button-next:hover {
-  background: var(--primary-color);
-  border-color: var(--primary-color);
+  color: var(--primary-color);
   transform: scale(1.04);
 }
 
 .nearby-carousel .swiper-button-prev::after,
 .nearby-carousel .swiper-button-next::after {
-  font-size: 18px;
+  font-size: 28px;
   font-weight: 700;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
 }
 
 .nearby-carousel .swiper-pagination-bullet {
@@ -2065,6 +2068,9 @@ header.react-site-header #mainmenu li ul.mega .sb-menu li a:hover {
     width: 44px;
     height: 44px;
     margin-top: -22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .nearby-carousel .swiper-button-prev {
