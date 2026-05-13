@@ -1,5 +1,7 @@
 import { usePublicHotelContent } from "../context/PublicHotelContentContext";
 
+import { Mail, Phone } from "lucide-react";
+
 function Footer() {
   const { footerContent, hotel } = usePublicHotelContent();
   return (
@@ -21,9 +23,14 @@ function Footer() {
 
               <div>
                 <h3 className="fs-20">Contact Us</h3>
-                T. {footerContent.phone}
-                <br />
-                M. {footerContent.email}
+                <div className="react-footer-contact-line">
+                  <Phone size={15} strokeWidth={2} />
+                  <a href={`tel:${footerContent.phone.replace(/\s+/g, "")}`}>{footerContent.phone}</a>
+                </div>
+                <div className="react-footer-contact-line">
+                  <Mail size={15} strokeWidth={2} />
+                  <a href={`mailto:${footerContent.email}`}>{footerContent.email}</a>
+                </div>
               </div>
             </div>
           </div>
