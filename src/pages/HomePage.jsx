@@ -13,15 +13,12 @@ function HomePage() {
       <div id="top" />
       <HeroSection />
       <ReservationBar />
-      <AboutSection />
-      <RoomsSection />
       <PropertyGallerySection
         sectionClassName="relative react-home-gallery-section"
-        subtitle="Photo Gallery"
-        title="A Closer Look At Royale Jazz Hotel"
-        text="Walk through the atmosphere before you book, from arrival moments and shared spaces to the details that shape the stay."
         variant="home"
       />
+      <AboutSection />
+      <RoomsSection />
       <FacilitiesSection />
       <VideoSection />
       <TestimonialsSection />

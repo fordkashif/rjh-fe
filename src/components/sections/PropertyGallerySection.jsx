@@ -69,31 +69,51 @@ function PropertyGallerySection({
   return (
     <section className={sectionClassName}>
       <div className="container relative z-2">
-        <div className={isHomeVariant ? "react-about-gallery-wrap react-home-gallery-wrap" : "react-about-gallery-wrap"}>
-          <div className={isHomeVariant ? "react-about-gallery-head react-home-gallery-head" : "react-about-gallery-head text-center"}>
-            <div className="subtitle mb-2">{subtitle}</div>
-            <h2 className="mb-3">{title}</h2>
-            <p className="mb-0">{text}</p>
+        {isHomeVariant ? (
+          <div className="react-home-floating-gallery" aria-label="Royale Jazz Hotel gallery">
+            <div className="react-home-floating-gallery-track">
+              {[...PROPERTY_GALLERY_IMAGES, ...PROPERTY_GALLERY_IMAGES].map((image, index) => (
+                <button
+                  type="button"
+                  key={`${image.image}-floating-${index}`}
+                  className="react-home-floating-gallery-card"
+                  onClick={() => openGalleryAtIndex(index % PROPERTY_GALLERY_IMAGES.length)}
+                  aria-label={`Open ${image.alt}`}
+                >
+                  <img src={image.image} alt={image.alt} className="react-home-floating-gallery-image" />
+                </button>
+              ))}
+            </div>
+            <div className="react-home-floating-gallery-fade is-left" />
+            <div className="react-home-floating-gallery-fade is-right" />
           </div>
+        ) : (
+          <div className="react-about-gallery-wrap">
+            <div className="react-about-gallery-head text-center">
+              <div className="subtitle mb-2">{subtitle}</div>
+              <h2 className="mb-3">{title}</h2>
+              <p className="mb-0">{text}</p>
+            </div>
 
-          <div className="react-about-gallery-grid">
-            {PROPERTY_GALLERY_IMAGES.map((image, index) => (
-              <button
-                type="button"
-                key={`${image.image}-${index}`}
-                className="react-about-gallery-tile"
-                onClick={() => openGalleryAtIndex(index)}
-                aria-label={`Open gallery photo ${index + 1}`}
-              >
-                <img
-                  src={image.image}
-                  alt={image.alt}
-                  className="react-about-gallery-tile-image"
-                />
-              </button>
-            ))}
+            <div className="react-about-gallery-grid">
+              {PROPERTY_GALLERY_IMAGES.map((image, index) => (
+                <button
+                  type="button"
+                  key={`${image.image}-${index}`}
+                  className="react-about-gallery-tile"
+                  onClick={() => openGalleryAtIndex(index)}
+                  aria-label={`Open gallery photo ${index + 1}`}
+                >
+                  <img
+                    src={image.image}
+                    alt={image.alt}
+                    className="react-about-gallery-tile-image"
+                  />
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <RoomPhotoLightbox
