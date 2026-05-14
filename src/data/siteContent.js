@@ -33,7 +33,9 @@ const featurePhotoByTitle = {
   "Swimming Pool": "/images/features/swimming-pool.jpg",
   "Fitness Center": "/images/features/fitness-center.jpg",
   "Continental Breakfast": "/images/features/continental-breakfast-2.jpg",
+  "Cafe and Restaurant": "/images/features/continental-breakfast-2.jpg",
   "Jetted Tub": "/images/features/jetted-tub.jpg",
+  "Jetted Tub Jacuzzi": "/images/features/jetted-tub.jpg",
   "Game Room": "/images/features/game-room.jpg",
   "Nearby Dining": "/images/nearby/marketplace.jpg",
 };

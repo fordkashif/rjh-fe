@@ -9,6 +9,38 @@ const featurePhotoByTitle = {
   "Nearby Dining": "/images/nearby/marketplace.jpg",
 };
 
+const normalizedFeatureTitleByAlias = {
+  "swimming pool": "Swimming Pool",
+  "fitness center": "Fitness Center",
+  "continental breakfast": "Continental Breakfast",
+  "continental breakfast 2": "Continental Breakfast",
+  "cafe and restaurant": "Continental Breakfast",
+  "jetted tub": "Jetted Tub",
+  "jetted tub jacuzzi": "Jetted Tub",
+  "game room": "Game Room",
+  "nearby dining": "Nearby Dining",
+};
+
+const featureCopyByTitle = {
+  "Swimming Pool": "Unwind in a lush, relaxing pool setting designed for serenity and rejuvenation.",
+  "Fitness Center": "Stay on routine with a fitness space described in the hotel brief as open 24 hours.",
+  "Continental Breakfast": "Start the day with continental breakfast, with more dining options just minutes away.",
+  "Jetted Tub": "Enjoy a soothing jetted tub experience created for calm, comfort, and quiet reset.",
+  "Game Room": "Step away from screens and spend time connecting over board games.",
+  "Nearby Dining": "Guests are within easy reach of nearby restaurants and nightlife options around the city.",
+};
+
+function canonicalizeFeatureTitle(title) {
+  return String(title ?? "")
+    .trim()
+    .replace(/\s+/g, " ")
+    .toLowerCase();
+}
+
+function normalizeFeatureTitle(title) {
+  return normalizedFeatureTitleByAlias[canonicalizeFeatureTitle(title)] ?? String(title ?? "").trim();
+}
+
 function requireConfiguredPublicClient() {
   if (!isSupabaseConfigured || !supabase) {
     throw new Error("Hotel details are temporarily unavailable. Please try again shortly.");
@@ -157,10 +189,10 @@ function mapHeroSlides(slideRows) {
 
 function mapFeatureItems(featureRows) {
   return featureRows.map((featureRow) => ({
-    title: featureRow.title,
-    text: featureRow.text,
+    title: normalizeFeatureTitle(featureRow.title),
+    text: featureCopyByTitle[normalizeFeatureTitle(featureRow.title)] ?? featureRow.text,
     icon: featureRow.icon_url,
-    image: featurePhotoByTitle[featureRow.title] ?? "/images/demo/facilities.webp",
+    image: featurePhotoByTitle[normalizeFeatureTitle(featureRow.title)] ?? "/images/demo/facilities.webp",
   }));
 }
 
