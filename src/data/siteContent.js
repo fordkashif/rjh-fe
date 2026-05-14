@@ -20,7 +20,7 @@ export const heroSlides = [
   {
     image: "/images/slider/royale-jazz-hero-2-replacement.jpg",
     title: "Modern Glam In The Heart Of Kingston",
-    text: "Royale Jazz Hotel blends modern glam with timeless sophistication at 58 Westiminister Road, placing guests close to the city's dining, culture, and nightlife.",
+    text: "Royale Jazz Hotel blends modern glam with timeless sophistication at 58 Westminster Road, placing guests close to the city's dining, culture, and nightlife.",
   },
   {
     image: "/images/slider/royale-jazz-hero-1-replacement.jpg",
@@ -32,8 +32,8 @@ export const heroSlides = [
 const featurePhotoByTitle = {
   "Swimming Pool": "/images/features/swimming-pool.jpg",
   "Fitness Center": "/images/features/fitness-center.jpg",
-  "Continental Breakfast": "/images/gallery-mix/menu.jpg",
-  "Jetted Tub Jacuzzi": "/images/features/jacuzzi.jpg",
+  "Continental Breakfast": "/images/features/continental-breakfast-2.jpg",
+  "Jetted Tub": "/images/features/jetted-tub.jpg",
   "Game Room": "/images/features/game-room.jpg",
   "Nearby Dining": "/images/nearby/marketplace.jpg",
 };
@@ -42,7 +42,7 @@ export const features = [
   ["Swimming Pool", "/images/svg/swimming-pool-svgrepo-com.svg"],
   ["Fitness Center", "/images/svg/fitness-gym-svgrepo-com.svg"],
   ["Continental Breakfast", "/images/svg/restaurant-svgrepo-com.svg"],
-  ["Jetted Tub Jacuzzi", "/images/svg/flower-lotus-thin-svgrepo-com.svg"],
+  ["Jetted Tub", "/images/svg/flower-lotus-thin-svgrepo-com.svg"],
   ["Game Room", "/images/svg/meeting-explain-svgrepo-com.svg"],
   ["Nearby Dining", "/images/svg/restaurant-svgrepo-com.svg"],
 ].map(([title, icon]) => ({
@@ -54,7 +54,7 @@ export const features = [
       "Swimming Pool": "Unwind in a lush, relaxing pool setting designed for serenity and rejuvenation.",
       "Fitness Center": "Stay on routine with a fitness space described in the hotel brief as open 24 hours.",
       "Continental Breakfast": "Start the day with continental breakfast, with more dining options just minutes away.",
-      "Jetted Tub Jacuzzi": "Enjoy a soothing jacuzzi experience created for calm, comfort, and quiet reset.",
+      "Jetted Tub": "Enjoy a soothing jetted tub experience created for calm, comfort, and quiet reset.",
       "Game Room": "Step away from screens and spend time connecting over board games.",
       "Nearby Dining": "Guests are within easy reach of nearby restaurants and nightlife options around the city.",
     }[title],
@@ -183,7 +183,7 @@ export const galleryImages = Array.from({ length: 8 }, (_, index) => ({
 }));
 
 export const footerContent = {
-  address: ["58 Westiminister Road", "Kingston, Jamaica"],
+  address: ["58 Westminster Road", "Kingston, Jamaica"],
   phone: "876-672-2462",
   phones: ["876-672-2462", "876-589-2424"],
   email: "royalejazzhotel@gmail.com",

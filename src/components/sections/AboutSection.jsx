@@ -4,6 +4,7 @@ import { usePublicHotelContent } from "../../context/PublicHotelContentContext";
 
 function AboutSection() {
   const { features, hotel } = usePublicHotelContent();
+  const carouselFeatures = [...features, ...features];
 
   return (
     <section id="section-about" className="relative lines-deco">
@@ -45,22 +46,34 @@ function AboutSection() {
 
         <div className="spacer-double" />
 
-        <div className="row g-4 relative z-2">
-          {features.map((feature) => (
-            <div className="col-lg-4 col-md-6" key={feature.title}>
-              <div className="react-feature-photo-card">
-                <div
-                  className="react-feature-photo-card-image react-bg-cover"
-                  style={{ backgroundImage: `url(${feature.image ?? feature.icon})` }}
-                  aria-hidden="true"
-                />
-                <div className="react-feature-photo-card-body">
-                  <h4>{feature.title}</h4>
-                  <p className="mb-0">{feature.text}</p>
+        <div className="react-feature-carousel" aria-label="Royale Jazz Hotel amenities">
+          <div className="react-feature-carousel-track">
+            {carouselFeatures.map((feature, index) => (
+              <div
+                className={`react-feature-photo-card react-feature-photo-card-size-${(index % 6) + 1}`}
+                key={`${feature.title}-${index}`}
+              >
+                <div className="react-feature-photo-card-inner">
+                  <div className="react-feature-photo-card-face react-feature-photo-card-front">
+                    <div
+                      className={`react-feature-photo-card-image react-bg-cover react-feature-photo-card-image-${
+                        (index % 6) + 1
+                      }`}
+                      style={{ backgroundImage: `url(${feature.image ?? feature.icon})` }}
+                      aria-hidden="true"
+                    />
+                    <div className="react-feature-photo-card-front-label">{feature.title}</div>
+                  </div>
+                  <div className="react-feature-photo-card-face react-feature-photo-card-back">
+                    <div className="react-feature-photo-card-body">
+                      <h4>{feature.title}</h4>
+                      <p className="mb-0">{feature.text}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

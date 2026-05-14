@@ -48,7 +48,7 @@ These are the details we can safely use right now.
 - `Swimming Pool`: Unwind in a swimming pool surrounded by lush greenery for rejuvenation and serenity.
 - `Fitness Center`: Gym is open 24 hours for a basic fitness routine.
 - `Dining`: Continental breakfast is offered; guests can also dine at nearby restaurants within walking distance.
-- `Jetted Tub Jacuzzi`: Positioned as a soothing, mood-lifting relaxation experience in a designated room.
+- `Jetted Tub`: Positioned as a soothing, mood-lifting relaxation experience in a designated room.
 - `Game Room`: Board games and in-person socializing are part of the experience.
 
 ## 2. Current Text Locations In The Codebase

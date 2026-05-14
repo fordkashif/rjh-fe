@@ -24,6 +24,14 @@ const PROPERTY_GALLERY_IMAGES = [
     alt: "Royale Jazz Hotel staircase",
   },
   {
+    image: "/images/misc/royale-jazz-hallway-lattice-panel.jpg",
+    alt: "Royale Jazz Hotel hallway lattice panel",
+  },
+  {
+    image: "/images/misc/royale-jazz-hallway-gold-panel.jpg",
+    alt: "Royale Jazz Hotel hallway gold panel",
+  },
+  {
     image: "/images/features/swimming-pool.jpg",
     alt: "Royale Jazz Hotel swimming pool",
   },
@@ -32,7 +40,7 @@ const PROPERTY_GALLERY_IMAGES = [
     alt: "Royale Jazz Hotel fitness center",
   },
   {
-    image: "/images/features/jacuzzi.jpg",
+    image: "/images/features/jetted-tub.jpg",
     alt: "Royale Jazz Hotel jacuzzi",
   },
   {
@@ -70,22 +78,28 @@ function PropertyGallerySection({
     <section className={sectionClassName}>
       <div className="container relative z-2">
         {isHomeVariant ? (
-          <div className="react-home-floating-gallery" aria-label="Royale Jazz Hotel gallery">
-            <div className="react-home-floating-gallery-track">
-              {[...PROPERTY_GALLERY_IMAGES, ...PROPERTY_GALLERY_IMAGES].map((image, index) => (
+          <div className="react-home-gallery-wrap">
+            <div className="react-about-gallery-head text-center">
+              <div className="subtitle mb-2">Photo Gallery</div>
+              <h2 className="mb-3">A Closer Look At Royale Jazz Hotel</h2>
+              <p className="mb-0">
+                Explore more of the property, from welcoming interiors to leisure spaces and suite details.
+              </p>
+            </div>
+
+            <div className="react-home-gallery-grid" aria-label="Royale Jazz Hotel gallery">
+              {PROPERTY_GALLERY_IMAGES.map((image, index) => (
                 <button
                   type="button"
-                  key={`${image.image}-floating-${index}`}
-                  className="react-home-floating-gallery-card"
-                  onClick={() => openGalleryAtIndex(index % PROPERTY_GALLERY_IMAGES.length)}
+                  key={`${image.image}-home-${index}`}
+                  className="react-home-gallery-tile"
+                  onClick={() => openGalleryAtIndex(index)}
                   aria-label={`Open ${image.alt}`}
                 >
-                  <img src={image.image} alt={image.alt} className="react-home-floating-gallery-image" />
+                  <img src={image.image} alt={image.alt} className="react-home-gallery-tile-image" />
                 </button>
               ))}
             </div>
-            <div className="react-home-floating-gallery-fade is-left" />
-            <div className="react-home-floating-gallery-fade is-right" />
           </div>
         ) : (
           <div className="react-about-gallery-wrap">

@@ -158,14 +158,102 @@ body.react-mobile-menu-open {
   background: var(--primary-color) !important;
 }
 
-.react-feature-photo-card {
-  display: grid;
-  grid-template-columns: 1fr;
-  min-height: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  background: #fff;
+.react-feature-carousel {
+  position: relative;
   overflow: hidden;
-  box-shadow: 0 18px 40px rgba(21, 18, 14, 0.06);
+  padding: 14px 0 24px;
+}
+
+.react-feature-carousel-track {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  width: max-content;
+  animation: reactFeatureCarousel 34s linear infinite;
+  will-change: transform;
+}
+
+.react-feature-carousel:hover .react-feature-carousel-track,
+.react-feature-carousel:focus-within .react-feature-carousel-track {
+  animation-play-state: paused;
+}
+
+.react-feature-photo-card {
+  position: relative;
+  flex: 0 0 auto;
+  width: 250px;
+  background: transparent;
+  perspective: 1200px;
+  transition: transform 0.35s ease;
+}
+
+.react-feature-photo-card:nth-child(6n + 1) {
+  transform: translateY(34px);
+}
+
+.react-feature-photo-card:nth-child(6n + 2) {
+  transform: translateY(0);
+}
+
+.react-feature-photo-card:nth-child(6n + 3) {
+  transform: translateY(58px);
+}
+
+.react-feature-photo-card:nth-child(6n + 4) {
+  transform: translateY(10px);
+}
+
+.react-feature-photo-card:nth-child(6n + 5) {
+  transform: translateY(42px);
+}
+
+.react-feature-photo-card:nth-child(6n + 6) {
+  transform: translateY(6px);
+}
+
+.react-feature-photo-card-size-1 .react-feature-photo-card-inner,
+.react-feature-photo-card-size-4 .react-feature-photo-card-inner {
+  height: 380px;
+}
+
+.react-feature-photo-card-size-2 .react-feature-photo-card-inner,
+.react-feature-photo-card-size-5 .react-feature-photo-card-inner {
+  height: 430px;
+}
+
+.react-feature-photo-card-size-3 .react-feature-photo-card-inner,
+.react-feature-photo-card-size-6 .react-feature-photo-card-inner {
+  height: 350px;
+}
+
+.react-feature-photo-card-inner {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  transform-style: preserve-3d;
+  transition: transform 0.7s ease;
+}
+
+.react-feature-photo-card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.react-feature-photo-card-front,
+.react-feature-photo-card-back {
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(21, 18, 14, 0.08);
+}
+
+.react-feature-photo-card-back {
+  display: grid;
+  align-items: end;
+  background:
+    linear-gradient(180deg, rgba(188, 154, 112, 0.08), rgba(18, 18, 18, 0.92)),
+    #121212;
+  transform: rotateY(180deg);
 }
 
 .react-feature-photo-card-button {
@@ -181,28 +269,84 @@ body.react-mobile-menu-open {
 }
 
 .react-feature-photo-card-image {
-  min-height: 220px;
-  aspect-ratio: 16 / 10;
+  width: 100%;
+  height: 100%;
   background-position: center;
+  transition: transform 0.55s ease;
 }
 
 .react-feature-photo-card-body {
   display: grid;
-  align-content: start;
   gap: 10px;
-  padding: 24px 26px 28px;
+  padding: 24px 22px 24px;
+  color: #fff;
 }
 
 .react-feature-photo-card-body h4 {
   margin-bottom: 0;
+  color: #fff;
 }
 
 .react-feature-photo-card-body p {
-  color: #5f5f5f;
+  color: rgba(255, 255, 255, 0.82);
 }
 
 .react-feature-photo-card-copy {
   color: #5f5f5f;
+}
+
+.react-feature-photo-card-front-label {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  padding: 12px 14px;
+  background: rgba(16, 16, 16, 0.62);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.react-feature-photo-card:hover,
+.react-feature-photo-card:focus-within {
+  transform: translateY(-10px);
+}
+
+.react-feature-photo-card:nth-child(6n + 1):hover,
+.react-feature-photo-card:nth-child(6n + 1):focus-within {
+  transform: translateY(22px);
+}
+
+.react-feature-photo-card:nth-child(6n + 2):hover,
+.react-feature-photo-card:nth-child(6n + 2):focus-within {
+  transform: translateY(-10px);
+}
+
+.react-feature-photo-card:nth-child(6n + 3):hover,
+.react-feature-photo-card:nth-child(6n + 3):focus-within {
+  transform: translateY(46px);
+}
+
+.react-feature-photo-card:hover .react-feature-photo-card-inner,
+.react-feature-photo-card:focus-within .react-feature-photo-card-inner {
+  transform: rotateY(180deg);
+}
+
+.react-feature-photo-card:hover .react-feature-photo-card-image,
+.react-feature-photo-card:focus-within .react-feature-photo-card-image {
+  transform: scale(1.05);
+}
+
+@keyframes reactFeatureCarousel {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .react-about-gallery-wrap {
@@ -258,105 +402,69 @@ body.react-mobile-menu-open {
   box-shadow: none;
 }
 
-.react-home-floating-gallery {
-  position: relative;
-  overflow: hidden;
-  padding: 10px 0 18px;
-}
-
-.react-home-floating-gallery-track {
-  display: flex;
-  align-items: flex-start;
+.react-home-gallery-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr 0.85fr;
+  grid-auto-rows: 220px;
   gap: 18px;
-  width: max-content;
-  animation: reactHomeFloatingGallery 30s linear infinite;
-  will-change: transform;
 }
 
-.react-home-floating-gallery-card {
-  flex: 0 0 auto;
-  width: 168px;
+.react-home-gallery-tile {
+  position: relative;
   padding: 0;
   border: 0;
-  background: transparent;
+  overflow: hidden;
+  background: #efe8da;
   cursor: pointer;
-  box-shadow: 0 16px 30px rgba(24, 20, 12, 0.1);
-  transition: transform 0.3s ease;
+  box-shadow: 0 18px 36px rgba(24, 20, 12, 0.08);
 }
 
-.react-home-floating-gallery-card:nth-child(6n + 1) {
-  height: 300px;
-  transform: translateY(28px);
+.react-home-gallery-tile:nth-child(1) {
+  grid-row: span 2;
 }
 
-.react-home-floating-gallery-card:nth-child(6n + 2) {
-  height: 380px;
-  transform: translateY(0);
+.react-home-gallery-tile:nth-child(4) {
+  grid-column: span 2;
 }
 
-.react-home-floating-gallery-card:nth-child(6n + 3) {
-  height: 250px;
-  transform: translateY(86px);
+.react-home-gallery-tile:nth-child(5) {
+  grid-row: span 2;
 }
 
-.react-home-floating-gallery-card:nth-child(6n + 4) {
-  height: 380px;
-  transform: translateY(0);
-}
-
-.react-home-floating-gallery-card:nth-child(6n + 5) {
-  height: 320px;
-  transform: translateY(28px);
-}
-
-.react-home-floating-gallery-card:nth-child(6n + 6) {
-  height: 340px;
-  transform: translateY(8px);
-}
-
-.react-home-floating-gallery-card:hover,
-.react-home-floating-gallery-card:focus-visible {
-  transform: translateY(4px) scale(1.02);
-}
-
-.react-home-floating-gallery-card:focus-visible {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 4px;
-}
-
-.react-home-floating-gallery-image {
+.react-home-gallery-tile-image {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+  transition: transform 0.45s ease;
 }
 
-.react-home-floating-gallery-fade {
+.react-home-gallery-tile:nth-child(5) .react-home-gallery-tile-image {
+  object-position: center 18%;
+}
+
+.react-home-gallery-tile::after {
+  content: "";
   position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 72px;
-  pointer-events: none;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 10, 10, 0), rgba(10, 10, 10, 0.12));
+  transition: opacity 0.35s ease;
 }
 
-.react-home-floating-gallery-fade.is-left {
-  left: 0;
-  background: linear-gradient(90deg, #fbf8f3 4%, rgba(251, 248, 243, 0));
+.react-home-gallery-tile:hover .react-home-gallery-tile-image,
+.react-home-gallery-tile:focus-visible .react-home-gallery-tile-image {
+  transform: scale(1.04);
 }
 
-.react-home-floating-gallery-fade.is-right {
-  right: 0;
-  background: linear-gradient(270deg, #fbf8f3 4%, rgba(251, 248, 243, 0));
+.react-home-gallery-tile:hover::after,
+.react-home-gallery-tile:focus-visible::after {
+  opacity: 0.55;
 }
 
-@keyframes reactHomeFloatingGallery {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
+.react-home-gallery-tile:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 4px;
 }
 
 .react-about-gallery-head {
@@ -2332,11 +2440,71 @@ header.react-site-header #mainmenu li ul.mega .sb-menu li a:hover {
   }
 
   .react-feature-photo-card {
-    grid-template-columns: 1fr;
+    transform: none !important;
+    width: 200px;
+  }
+
+  .react-feature-carousel {
+    padding: 6px 0 12px;
+  }
+
+  .react-feature-carousel-track {
+    gap: 12px;
   }
 
   .react-feature-photo-card-image {
-    min-height: 180px;
+    min-height: 220px;
+    aspect-ratio: 16 / 10;
+    height: 220px;
+  }
+
+  .react-feature-photo-card-size-1 .react-feature-photo-card-inner,
+  .react-feature-photo-card-size-2 .react-feature-photo-card-inner,
+  .react-feature-photo-card-size-3 .react-feature-photo-card-inner,
+  .react-feature-photo-card-size-4 .react-feature-photo-card-inner,
+  .react-feature-photo-card-size-5 .react-feature-photo-card-inner,
+  .react-feature-photo-card-size-6 .react-feature-photo-card-inner {
+    height: auto;
+  }
+
+  .react-feature-photo-card-inner {
+    height: auto;
+    transform: none !important;
+    transition: none;
+  }
+
+  .react-feature-photo-card-face {
+    position: static;
+    backface-visibility: visible;
+  }
+
+  .react-feature-photo-card-front,
+  .react-feature-photo-card-back {
+    box-shadow: 0 12px 28px rgba(21, 18, 14, 0.06);
+  }
+
+  .react-feature-photo-card-back {
+    display: block;
+    transform: none;
+    margin-top: 10px;
+    background: #fff;
+  }
+
+  .react-feature-photo-card-body {
+    padding: 20px 20px 22px;
+    color: inherit;
+  }
+
+  .react-feature-photo-card-body h4 {
+    color: inherit;
+  }
+
+  .react-feature-photo-card-body p {
+    color: #5f5f5f;
+  }
+
+  .react-feature-photo-card-front-label {
+    font-size: 0.9rem;
   }
 
   .react-about-gallery-wrap {
@@ -2351,28 +2519,17 @@ header.react-site-header #mainmenu li ul.mega .sb-menu li a:hover {
     padding: 0;
   }
 
-  .react-home-floating-gallery {
-    padding: 8px 0 10px;
-  }
-
-  .react-home-floating-gallery-track {
+  .react-home-gallery-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 210px;
     gap: 12px;
   }
 
-  .react-home-floating-gallery-card,
-  .react-home-floating-gallery-card:nth-child(6n + 1),
-  .react-home-floating-gallery-card:nth-child(6n + 2),
-  .react-home-floating-gallery-card:nth-child(6n + 3),
-  .react-home-floating-gallery-card:nth-child(6n + 4),
-  .react-home-floating-gallery-card:nth-child(6n + 5),
-  .react-home-floating-gallery-card:nth-child(6n + 6) {
-    width: 124px;
-    height: 210px;
-    transform: translateY(0);
-  }
-
-  .react-home-floating-gallery-fade {
-    width: 32px;
+  .react-home-gallery-tile:nth-child(1),
+  .react-home-gallery-tile:nth-child(4),
+  .react-home-gallery-tile:nth-child(5) {
+    grid-column: auto;
+    grid-row: auto;
   }
 
   .react-about-gallery-grid {
