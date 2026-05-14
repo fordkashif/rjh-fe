@@ -431,6 +431,10 @@ body.react-mobile-menu-open {
   grid-row: span 2;
 }
 
+.react-home-gallery-tile:nth-child(10) {
+  grid-row: span 2;
+}
+
 .react-home-gallery-tile-image {
   display: block;
   width: 100%;
@@ -442,6 +446,10 @@ body.react-mobile-menu-open {
 
 .react-home-gallery-tile:nth-child(5) .react-home-gallery-tile-image {
   object-position: center 18%;
+}
+
+.react-home-gallery-tile:nth-child(10) .react-home-gallery-tile-image {
+  object-position: center 12%;
 }
 
 .react-home-gallery-tile::after {
@@ -522,6 +530,10 @@ body.react-mobile-menu-open {
   grid-row: span 2;
 }
 
+.react-about-gallery-tile:nth-child(10) {
+  grid-row: span 2;
+}
+
 .react-about-gallery-tile::after {
   content: "";
   position: absolute;
@@ -557,6 +569,10 @@ body.react-mobile-menu-open {
 
 .react-about-gallery-tile:nth-child(5) .react-about-gallery-tile-image {
   object-position: center 18%;
+}
+
+.react-about-gallery-tile:nth-child(10) .react-about-gallery-tile-image {
+  object-position: center 12%;
 }
 
 .react-about-gallery-tile:hover .react-about-gallery-tile-image,
@@ -2527,7 +2543,8 @@ header.react-site-header #mainmenu li ul.mega .sb-menu li a:hover {
 
   .react-home-gallery-tile:nth-child(1),
   .react-home-gallery-tile:nth-child(4),
-  .react-home-gallery-tile:nth-child(5) {
+  .react-home-gallery-tile:nth-child(5),
+  .react-home-gallery-tile:nth-child(10) {
     grid-column: auto;
     grid-row: auto;
   }
@@ -2539,7 +2556,8 @@ header.react-site-header #mainmenu li ul.mega .sb-menu li a:hover {
 
   .react-about-gallery-tile:nth-child(1),
   .react-about-gallery-tile:nth-child(4),
-  .react-about-gallery-tile:nth-child(5) {
+  .react-about-gallery-tile:nth-child(5),
+  .react-about-gallery-tile:nth-child(10) {
     grid-column: auto;
     grid-row: auto;
   }

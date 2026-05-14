@@ -40,6 +40,10 @@ const PROPERTY_GALLERY_IMAGES = [
     alt: "Royale Jazz Hotel fitness center",
   },
   {
+    image: "/images/misc/royale-jazz-blue-vase.jpg",
+    alt: "Royale Jazz Hotel blue water feature",
+  },
+  {
     image: "/images/features/jetted-tub.jpg",
     alt: "Royale Jazz Hotel jacuzzi",
   },
