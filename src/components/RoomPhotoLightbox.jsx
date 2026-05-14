@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 function RoomPhotoLightbox({
@@ -35,13 +36,27 @@ function RoomPhotoLightbox({
     };
   }, [activeIndex, images.length, isOpen, onClose, onSelect]);
 
+  useEffect(() => {
+    if (!isOpen || typeof document === "undefined") {
+      return undefined;
+    }
+
+    const { body } = document;
+    const previousOverflow = body.style.overflow;
+    body.style.overflow = "hidden";
+
+    return () => {
+      body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
+
   if (!isOpen || images.length === 0) {
     return null;
   }
 
   const activeImage = images[activeIndex] ?? images[0];
 
-  return (
+  const lightboxMarkup = (
     <div className="react-room-lightbox" role="dialog" aria-modal="true" aria-label={title}>
       <button
         type="button"
@@ -131,6 +146,12 @@ function RoomPhotoLightbox({
       </div>
     </div>
   );
+
+  if (typeof document === "undefined") {
+    return lightboxMarkup;
+  }
+
+  return createPortal(lightboxMarkup, document.body);
 }
 
 export default RoomPhotoLightbox;
