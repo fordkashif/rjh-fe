@@ -2549,6 +2549,11 @@ header.react-site-header #mainmenu li ul.mega .sb-menu li a:hover {
     grid-row: auto;
   }
 
+  .react-home-gallery-tile:nth-child(5),
+  .react-home-gallery-tile:nth-child(10) {
+    grid-row: span 2;
+  }
+
   .react-about-gallery-grid {
     grid-template-columns: 1fr;
     grid-auto-rows: 210px;
@@ -2560,6 +2565,11 @@ header.react-site-header #mainmenu li ul.mega .sb-menu li a:hover {
   .react-about-gallery-tile:nth-child(10) {
     grid-column: auto;
     grid-row: auto;
+  }
+
+  .react-about-gallery-tile:nth-child(5),
+  .react-about-gallery-tile:nth-child(10) {
+    grid-row: span 2;
   }
 
   .react-booking-search-grid {
