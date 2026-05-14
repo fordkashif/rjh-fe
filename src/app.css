@@ -449,7 +449,7 @@ body.react-mobile-menu-open {
 }
 
 .react-home-gallery-tile:nth-child(10) .react-home-gallery-tile-image {
-  object-position: center 12%;
+  object-position: center 15%;
 }
 
 .react-home-gallery-tile::after {
@@ -572,7 +572,7 @@ body.react-mobile-menu-open {
 }
 
 .react-about-gallery-tile:nth-child(10) .react-about-gallery-tile-image {
-  object-position: center 12%;
+  object-position: center 15%;
 }
 
 .react-about-gallery-tile:hover .react-about-gallery-tile-image,
