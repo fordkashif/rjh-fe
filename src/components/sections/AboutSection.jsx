@@ -1,10 +1,42 @@
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import StarRating from "../StarRating";
 import ParallaxMaskImage from "../ParallaxMaskImage";
 import { usePublicHotelContent } from "../../context/PublicHotelContentContext";
 
 function AboutSection() {
   const { features, hotel } = usePublicHotelContent();
-  const carouselFeatures = [...features, ...features];
+  const [flippedCard, setFlippedCard] = useState(null);
+  const autoplayResumeTimeoutRef = useRef(null);
+  const featureCards = useMemo(
+    () =>
+      features.map((feature, index) => ({
+        ...feature,
+        sizeClass: `react-feature-photo-card-size-${(index % 6) + 1}`,
+        offsetClass: `react-feature-photo-card-offset-${(index % 6) + 1}`,
+      })),
+    [features],
+  );
+
+  function scheduleAutoplayResume(swiper) {
+    if (!swiper?.autoplay || swiper.destroyed) {
+      return;
+    }
+
+    window.clearTimeout(autoplayResumeTimeoutRef.current);
+    autoplayResumeTimeoutRef.current = window.setTimeout(() => {
+      if (!swiper.destroyed) {
+        swiper.autoplay.start();
+      }
+    }, 160);
+  }
+
+  function toggleCard(index) {
+    setFlippedCard((current) => (current === index ? null : index));
+  }
+
+  useEffect(() => () => window.clearTimeout(autoplayResumeTimeoutRef.current), []);
 
   return (
     <section id="section-about" className="relative lines-deco">
@@ -47,33 +79,61 @@ function AboutSection() {
         <div className="spacer-double" />
 
         <div className="react-feature-carousel" aria-label="Royale Jazz Hotel amenities">
-          <div className="react-feature-carousel-track">
-            {carouselFeatures.map((feature, index) => (
-              <div
-                className={`react-feature-photo-card react-feature-photo-card-size-${(index % 6) + 1}`}
-                key={`${feature.title}-${index}`}
-              >
-                <div className="react-feature-photo-card-inner">
-                  <div className="react-feature-photo-card-face react-feature-photo-card-front">
-                    <div
-                      className={`react-feature-photo-card-image react-bg-cover react-feature-photo-card-image-${
-                        (index % 6) + 1
-                      }`}
-                      style={{ backgroundImage: `url(${feature.image ?? feature.icon})` }}
-                      aria-hidden="true"
-                    />
-                    <div className="react-feature-photo-card-front-label">{feature.title}</div>
-                  </div>
-                  <div className="react-feature-photo-card-face react-feature-photo-card-back">
-                    <div className="react-feature-photo-card-body">
-                      <h4>{feature.title}</h4>
-                      <p className="mb-0">{feature.text}</p>
+          <Swiper
+            modules={[Autoplay]}
+            className="react-feature-swiper"
+            loop
+            speed={900}
+            grabCursor
+            watchSlidesProgress
+            autoplay={{ delay: 2800, disableOnInteraction: false, pauseOnMouseEnter: true, reverseDirection: true }}
+            breakpoints={{
+              0: { slidesPerView: 1.18, spaceBetween: 12 },
+              576: { slidesPerView: 1.65, spaceBetween: 14 },
+              768: { slidesPerView: 2.15, spaceBetween: 16 },
+              992: { slidesPerView: 3.2, spaceBetween: 18 },
+              1200: { slidesPerView: 4.1, spaceBetween: 18 },
+            }}
+            onTouchStart={() => setFlippedCard(null)}
+            onTap={scheduleAutoplayResume}
+            onClick={scheduleAutoplayResume}
+            onTouchEnd={scheduleAutoplayResume}
+            onSlideChange={() => setFlippedCard(null)}
+            onSlideChangeTransitionEnd={scheduleAutoplayResume}
+          >
+            {featureCards.map((feature, index) => (
+              <SwiperSlide key={`${feature.title}-${index}`}>
+                <button
+                  type="button"
+                  className={`react-feature-photo-card ${feature.sizeClass} ${feature.offsetClass} ${
+                    flippedCard === index ? "is-flipped" : ""
+                  }`}
+                  onClick={() => toggleCard(index)}
+                  aria-pressed={flippedCard === index}
+                  aria-label={`Show details for ${feature.title}`}
+                >
+                  <div className="react-feature-photo-card-inner">
+                    <div className="react-feature-photo-card-face react-feature-photo-card-front">
+                      <div
+                        className={`react-feature-photo-card-image react-bg-cover react-feature-photo-card-image-${
+                          (index % 6) + 1
+                        }`}
+                        style={{ backgroundImage: `url(${feature.image ?? feature.icon})` }}
+                        aria-hidden="true"
+                      />
+                      <div className="react-feature-photo-card-front-label">{feature.title}</div>
+                    </div>
+                    <div className="react-feature-photo-card-face react-feature-photo-card-back">
+                      <div className="react-feature-photo-card-body">
+                        <h4>{feature.title}</h4>
+                        <p className="mb-0">{feature.text}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                </button>
+              </SwiperSlide>
             ))}
-          </div>
+          </Swiper>
         </div>
       </div>
     </section>

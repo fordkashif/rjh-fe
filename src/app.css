@@ -164,50 +164,56 @@ body.react-mobile-menu-open {
   padding: 14px 0 24px;
 }
 
-.react-feature-carousel-track {
-  display: flex;
-  align-items: flex-start;
-  gap: 18px;
-  width: max-content;
-  animation: reactFeatureCarousel 34s linear infinite;
-  will-change: transform;
+.react-feature-swiper {
+  overflow: visible;
 }
 
-.react-feature-carousel:hover .react-feature-carousel-track,
-.react-feature-carousel:focus-within .react-feature-carousel-track {
-  animation-play-state: paused;
+.react-feature-swiper .swiper-wrapper {
+  align-items: flex-start;
+}
+
+.react-feature-swiper .swiper-slide {
+  height: auto;
+}
+
+.react-feature-swiper .swiper-slide > * {
+  width: 100%;
 }
 
 .react-feature-photo-card {
   position: relative;
-  flex: 0 0 auto;
-  width: 250px;
+  display: block;
+  width: 100%;
   background: transparent;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
   perspective: 1200px;
   transition: transform 0.35s ease;
 }
 
-.react-feature-photo-card:nth-child(6n + 1) {
+.react-feature-photo-card-offset-1 {
   transform: translateY(34px);
 }
 
-.react-feature-photo-card:nth-child(6n + 2) {
+.react-feature-photo-card-offset-2 {
   transform: translateY(0);
 }
 
-.react-feature-photo-card:nth-child(6n + 3) {
+.react-feature-photo-card-offset-3 {
   transform: translateY(58px);
 }
 
-.react-feature-photo-card:nth-child(6n + 4) {
+.react-feature-photo-card-offset-4 {
   transform: translateY(10px);
 }
 
-.react-feature-photo-card:nth-child(6n + 5) {
+.react-feature-photo-card-offset-5 {
   transform: translateY(42px);
 }
 
-.react-feature-photo-card:nth-child(6n + 6) {
+.react-feature-photo-card-offset-6 {
   transform: translateY(6px);
 }
 
@@ -256,14 +262,7 @@ body.react-mobile-menu-open {
   transform: rotateY(180deg);
 }
 
-.react-feature-photo-card-button {
-  width: 100%;
-  padding: 0;
-  text-align: left;
-  cursor: pointer;
-}
-
-.react-feature-photo-card-button:focus-visible {
+.react-feature-photo-card:focus-visible {
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;
 }
@@ -309,43 +308,34 @@ body.react-mobile-menu-open {
   text-transform: uppercase;
 }
 
-.react-feature-photo-card:hover,
-.react-feature-photo-card:focus-within {
-  transform: translateY(-10px);
-}
-
-.react-feature-photo-card:nth-child(6n + 1):hover,
-.react-feature-photo-card:nth-child(6n + 1):focus-within {
-  transform: translateY(22px);
-}
-
-.react-feature-photo-card:nth-child(6n + 2):hover,
-.react-feature-photo-card:nth-child(6n + 2):focus-within {
-  transform: translateY(-10px);
-}
-
-.react-feature-photo-card:nth-child(6n + 3):hover,
-.react-feature-photo-card:nth-child(6n + 3):focus-within {
-  transform: translateY(46px);
-}
-
-.react-feature-photo-card:hover .react-feature-photo-card-inner,
-.react-feature-photo-card:focus-within .react-feature-photo-card-inner {
+.react-feature-photo-card.is-flipped .react-feature-photo-card-inner {
   transform: rotateY(180deg);
 }
 
-.react-feature-photo-card:hover .react-feature-photo-card-image,
-.react-feature-photo-card:focus-within .react-feature-photo-card-image {
-  transform: scale(1.05);
-}
-
-@keyframes reactFeatureCarousel {
-  from {
-    transform: translateX(0);
+@media (hover: hover) {
+  .react-feature-photo-card:hover,
+  .react-feature-photo-card:focus-within {
+    transform: translateY(-10px);
   }
 
-  to {
-    transform: translateX(-50%);
+  .react-feature-photo-card-offset-1:hover,
+  .react-feature-photo-card-offset-1:focus-within {
+    transform: translateY(22px);
+  }
+
+  .react-feature-photo-card-offset-2:hover,
+  .react-feature-photo-card-offset-2:focus-within {
+    transform: translateY(-10px);
+  }
+
+  .react-feature-photo-card-offset-3:hover,
+  .react-feature-photo-card-offset-3:focus-within {
+    transform: translateY(46px);
+  }
+
+  .react-feature-photo-card:hover .react-feature-photo-card-image,
+  .react-feature-photo-card:focus-within .react-feature-photo-card-image {
+    transform: scale(1.05);
   }
 }
 
@@ -2457,21 +2447,20 @@ header.react-site-header #mainmenu li ul.mega .sb-menu li a:hover {
 
   .react-feature-photo-card {
     transform: none !important;
-    width: 200px;
   }
 
   .react-feature-carousel {
     padding: 6px 0 12px;
   }
 
-  .react-feature-carousel-track {
-    gap: 12px;
+  .react-feature-swiper {
+    overflow: visible;
   }
 
   .react-feature-photo-card-image {
-    min-height: 220px;
-    aspect-ratio: 16 / 10;
-    height: 220px;
+    min-height: 250px;
+    aspect-ratio: 3 / 4;
+    height: 250px;
   }
 
   .react-feature-photo-card-size-1 .react-feature-photo-card-inner,
@@ -2480,43 +2469,27 @@ header.react-site-header #mainmenu li ul.mega .sb-menu li a:hover {
   .react-feature-photo-card-size-4 .react-feature-photo-card-inner,
   .react-feature-photo-card-size-5 .react-feature-photo-card-inner,
   .react-feature-photo-card-size-6 .react-feature-photo-card-inner {
-    height: auto;
+    height: 250px;
   }
 
   .react-feature-photo-card-inner {
-    height: auto;
-    transform: none !important;
-    transition: none;
+    height: 250px;
   }
 
   .react-feature-photo-card-face {
-    position: static;
-    backface-visibility: visible;
-  }
-
-  .react-feature-photo-card-front,
-  .react-feature-photo-card-back {
-    box-shadow: 0 12px 28px rgba(21, 18, 14, 0.06);
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 
   .react-feature-photo-card-back {
-    display: block;
-    transform: none;
-    margin-top: 10px;
-    background: #fff;
+    display: grid;
+    margin-top: 0;
   }
 
   .react-feature-photo-card-body {
-    padding: 20px 20px 22px;
-    color: inherit;
-  }
-
-  .react-feature-photo-card-body h4 {
-    color: inherit;
-  }
-
-  .react-feature-photo-card-body p {
-    color: #5f5f5f;
+    padding: 18px 18px 20px;
   }
 
   .react-feature-photo-card-front-label {

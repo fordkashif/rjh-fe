@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import StarRating from "../StarRating";
@@ -5,6 +6,23 @@ import { usePublicHotelContent } from "../../context/PublicHotelContentContext";
 
 function HeroSection() {
   const { heroSlides } = usePublicHotelContent();
+  const autoplayResumeTimeoutRef = useRef(null);
+
+  function scheduleAutoplayResume(swiper) {
+    if (!swiper?.autoplay || swiper.destroyed) {
+      return;
+    }
+
+    window.clearTimeout(autoplayResumeTimeoutRef.current);
+    autoplayResumeTimeoutRef.current = window.setTimeout(() => {
+      if (!swiper.destroyed) {
+        swiper.autoplay.start();
+      }
+    }, 160);
+  }
+
+  useEffect(() => () => window.clearTimeout(autoplayResumeTimeoutRef.current), []);
+
   return (
     <section
       id="section-intro"
@@ -19,6 +37,10 @@ function HeroSection() {
           autoplay={{ delay: 3000, disableOnInteraction: false }}
           pagination={{ clickable: true, type: "fraction" }}
           navigation
+          onTap={scheduleAutoplayResume}
+          onClick={scheduleAutoplayResume}
+          onTouchEnd={scheduleAutoplayResume}
+          onSlideChangeTransitionEnd={scheduleAutoplayResume}
         >
           {heroSlides.map((slide) => (
             <SwiperSlide key={slide.title}>
